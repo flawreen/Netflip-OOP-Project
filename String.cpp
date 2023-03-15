@@ -18,7 +18,20 @@ String::String(const String& cpy) {
 		delete[] str;
 	}
 	size = cpy.size;
-	strcpy(str, cpy.str);
+	if (cpy.str == nullptr) {
+		str = nullptr;
+	} else strcpy(str, cpy.str);
+}
+
+String &String::operator=(const String &cpy) {
+	if (str != nullptr) {
+		delete[] str;
+	}
+	size = cpy.size;
+	if (cpy.str == nullptr) {
+		str = nullptr;
+	} else strcpy(str, cpy.str);
+	return *this;
 }
 
 String::~String() {
@@ -66,13 +79,8 @@ void String::operator[](const char *substr) {
     }
 }
 
-String &String::operator=(const String &cpy) {
-	if (str != nullptr) {
-		delete[] str;
-	}
-	size = cpy.size;
-	strcpy(str, cpy.str);
-	return *this;
+char* String::getStr() const {
+	return this->str;
 }
 
 //int main() {
@@ -95,7 +103,6 @@ String &String::operator=(const String &cpy) {
 //
 //    //  cautare
 //    sir["a"];
-//
 //
 //    return 0;
 //}

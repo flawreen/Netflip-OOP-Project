@@ -14,6 +14,11 @@ public:
 	Movie();  // Default constructor
 	Movie(const char* title, double price);
 	Movie(const char* title, double price, const char* awards);
+	Movie(const Movie &cpy);
+	~Movie();
+	Movie& operator=(const Movie& cpy);
+
+	char* getTitle() const;
 
 	void addAward(const char* award);
 	void increaseViewCount();

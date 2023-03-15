@@ -13,6 +13,9 @@ public:
     String(const String &cpy);
     // Destructor
      ~String();
+
+	 char* getStr() const;
+
 	// operator= overload pentru copiere
 	String& operator= (const String& cpy);
     // operator+ overload pentru concatenare
