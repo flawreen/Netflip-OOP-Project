@@ -27,13 +27,13 @@ clase și să implementați acolo afișarea.
 faceți încă o dată).
 
 #### Constructori
-- [ ] Minim 3 clase trebuie să aibă constructori fără parametru, respectiv para-
+- [x] Minim 3 clase trebuie să aibă constructori fără parametru, respectiv para-
 metrizați, care să inițializeze datele membre.
 
 #### Constructori de copiere si operator=
-- [ ] Pentru minim două clase trebuie să implementați explicit constructorul de
+- [x] Pentru minim două clase trebuie să implementați explicit constructorul de
 copiere și să supraîncărcați operator=.
-- [ ] Cel puțin una dintre aceste clase trebuie să fie dintre cele care folosesc
+- [x] Cel puțin una dintre aceste clase trebuie să fie dintre cele care folosesc
 alocare dinamică.
 
 #### Alocare dinamica
