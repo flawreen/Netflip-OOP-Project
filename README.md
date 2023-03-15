@@ -57,5 +57,14 @@ mutare pentru cel puțin o clasă care gestionează memorie alocată dinamic.
 țiul 2 din laboratorul 1 (dar trebuie să aibă sens pentru tema voastră).
 
 [v0.1-alpha](https://github.com/flawreen/Netflip/releases/tag/v0.1-alpha):
-- Added String class.
-- Added Movie class with basic functionalities.
+- Added String class;
+- Added Movie class with basic functionalities;
+
+[v0.2-alpha](https://github.com/flawreen/Netflip/releases/tag/v0.2-alpha):
+- Updated Movie class;
+
+[v0.3-alpha](https://github.com/flawreen/Netflip/releases/tag/v0.3-alpha):
+- Updated String class;
+
+[v0.4-alpha](https://github.com/flawreen/Netflip/releases/tag/v0.4-alpha):
+- Added Director class;
