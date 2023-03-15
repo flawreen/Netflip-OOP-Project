@@ -15,10 +15,10 @@ dată membru de tip Adresă în clasa Contact, să aveți un vector de Angajat
 #### Metode
 - [x] Minim 3 getteri și 3 setteri pentru datele membru (pot fi pentru câmpuri
 diferite, din clase diferite).
-- [ ] Minim 2 metode de „logică de business” care să aibă sens pentru tema
+- [x] Minim 2 metode de „logică de business” care să aibă sens pentru tema
 voastră (e.g.: calculează prețul unui produs aplicând o reducere, returnează
 salariul mediu al angajaților din firmă etc.)
-- [ ] Pentru minim 2 clase trebuie să implementați o metodă de afișare pe ecran
+- [x] Pentru minim 2 clase trebuie să implementați o metodă de afișare pe ecran
 a datelor din acea clasă (în ce format vreți voi).
 Alternativ, se acceptă și doar să supraîncărcați operator<< pentru aceste
 clase și să implementați acolo afișarea.
