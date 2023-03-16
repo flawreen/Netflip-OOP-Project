@@ -7,8 +7,8 @@
 #### Clase
 - [x] Trebuie să respectați principiul encapsulări (nu aveți voie să aveți date
 membre publice). Metodele pot fi publice sau private.
-- [ ] Trebuie să definiți minim 5 clase, relevante pentru tema aleasă.
-- [ ] Minim 3 dintre clase trebuie să fie corelate prin compunere (ex. să aveți o
+- [x] Trebuie să definiți minim 5 clase, relevante pentru tema aleasă.
+- [x] Minim 3 dintre clase trebuie să fie corelate prin compunere (ex. să aveți o
 dată membru de tip Adresă în clasa Contact, să aveți un vector de Angajat
 în clasa Companie etc.)
 
