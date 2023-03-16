@@ -71,3 +71,6 @@ mutare pentru cel puțin o clasă care gestionează memorie alocată dinamic.
 
 [v0.5-alpha](https://github.com/flawreen/Netflip/releases/tag/v0.5-alpha):
 - Fixed the copy constructors and operator= overloading for Director and Movie classes;
+
+[v0.6-alpha](https://github.com/flawreen/Netflip/releases/tag/v0.6-alpha):
+- Added User and Subscription classes, modified some variable names in Movie class.
