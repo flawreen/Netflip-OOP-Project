@@ -66,9 +66,9 @@ Director& Director::operator=(const Director &cpy) {
 	if (cpy.bestMovie == nullptr) { bestMovie = nullptr; }
 	else {
 		if (cpy.bestMovie->getBestAward() != nullptr) {
-			bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getPrice(), cpy.bestMovie->getBestAward()->getStr());
+			bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getMoviePrice(), cpy.bestMovie->getBestAward()->getStr());
 		}
-		else bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getPrice());
+		else bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getMoviePrice());
 	}
 
 	if (cpy.name == nullptr) { name = nullptr; }
@@ -160,19 +160,19 @@ void Director::setEarnings(double earnings) {
 	Director::earnings = earnings;
 }
 
-int main() {
-	Director d1("Mihai Bercea", "La leagane");
-	Director d2("Eugen Cotitu", "Pe afara", "best burger 2021");
-	Director d3("Bromaniac", "Berceni", "Teambuilding", 10.00);
-	Director d4("Quentin Bambino", "La furat", "A fost odata ca niciodata in Balotexas", 14.55, "Club99 - aproape micutzu");
-
-	d4.setMovie("Minecraft SMP", 19.33);
-	d4.showInfo();
-	Director dcopy(d4);
-	dcopy.showInfo();
-	d4.updateRevenue();
-	d4.calculateEarnings();
-
-	return 0;
-}
+//int main() {
+//	Director d1("Mihai Bercea", "La leagane");
+//	Director d2("Eugen Cotitu", "Pe afara", "best burger 2021");
+//	Director d3("Bromaniac", "Berceni", "Teambuilding", 10.00);
+//	Director d4("Quentin Bambino", "La furat", "A fost odata ca niciodata in Balotexas", 14.55, "Club99 - aproape micutzu");
+//
+//	d4.setMovie("Minecraft SMP", 19.33);
+//	d4.showInfo();
+//	Director dcopy(d4);
+//	dcopy.showInfo();
+//	d4.updateRevenue();
+//	d4.calculateEarnings();
+//
+//	return 0;
+//}
 

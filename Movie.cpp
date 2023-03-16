@@ -7,10 +7,10 @@
 
 using namespace std;
 
-Movie::Movie() : title(nullptr), bestAward(nullptr), rating(0), viewCount(0), price(0) {}
+Movie::Movie() : title(nullptr), bestAward(nullptr), rating(0), viewCount(0), moviePrice(0) {}
 
 Movie::Movie(const char *title, double price) : title(new String(title)), bestAward(nullptr),
-												rating(0), viewCount(0), price(price) {}
+												rating(0), viewCount(0), moviePrice(price) {}
 
 Movie::Movie(const char *title, double price, const char *award) : Movie(title, price) {
 	bestAward = new String(award);
@@ -28,7 +28,7 @@ Movie::Movie(const Movie &cpy) {
 
 	rating = cpy.rating;
 	viewCount = cpy.viewCount;
-	price = cpy.price;
+	moviePrice = cpy.moviePrice;
 }
 
 Movie &Movie::operator=(const Movie &cpy) {
@@ -43,7 +43,7 @@ Movie &Movie::operator=(const Movie &cpy) {
 
 	rating = cpy.rating;
 	viewCount = cpy.viewCount;
-	price = cpy.price;
+	moviePrice = cpy.moviePrice;
 	return *this;
 }
 
@@ -76,8 +76,8 @@ char *Movie::getTitle() const {
 	return title->getStr();
 }
 
-double Movie::getPrice() const {
-	return price;
+double Movie::getMoviePrice() const {
+	return moviePrice;
 }
 
 String *Movie::getBestAward() const {

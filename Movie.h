@@ -9,7 +9,7 @@
 class Movie {
 	String *title, *bestAward;
 	int rating, viewCount;
-	double price;
+	double moviePrice;
 public:
 	Movie();  // Default constructor
 	Movie(const char* title, double price);
@@ -25,7 +25,7 @@ public:
 	void calculateRating();
 	friend std::ostream& operator<<(std::ostream& os, Movie& mov);
 
-	double getPrice() const;
+	double getMoviePrice() const;
 
 	String *getBestAward() const;
 };
