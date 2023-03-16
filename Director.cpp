@@ -35,16 +35,21 @@ Director::Director(const Director &cpy) {
 	if (university != nullptr) { delete university; }
 
 	if (cpy.bestMovie == nullptr) { bestMovie = nullptr; }
-	else bestMovie = new Movie(*cpy.bestMovie);
+	else {
+		if (cpy.bestMovie->getBestAward() != nullptr) {
+			bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getPrice(), cpy.bestMovie->getBestAward()->getStr());
+		}
+		else bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getPrice());
+	}
 
 	if (cpy.name == nullptr) { name = nullptr; }
-	else name = new String(*cpy.name);
+	else name = new String(cpy.name->getStr());
 
 	if (cpy.lastAward == nullptr) { lastAward = nullptr; }
-	else lastAward = new String(*cpy.lastAward);
+	else lastAward = new String(cpy.lastAward->getStr());
 
 	if (cpy.university == nullptr) { university = nullptr; }
-	else university = new String(*cpy.university);
+	else university = new String(cpy.university->getStr());
 
 	movieCount = cpy.movieCount;
 	movieViews = cpy.movieViews;
@@ -59,16 +64,21 @@ Director& Director::operator=(const Director &cpy) {
 	if (university != nullptr) { delete university; }
 
 	if (cpy.bestMovie == nullptr) { bestMovie = nullptr; }
-	else bestMovie = new Movie(*cpy.bestMovie);
+	else {
+		if (cpy.bestMovie->getBestAward() != nullptr) {
+			bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getPrice(), cpy.bestMovie->getBestAward()->getStr());
+		}
+		else bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getPrice());
+	}
 
 	if (cpy.name == nullptr) { name = nullptr; }
-	else name = new String(*cpy.name);
+	else name = new String(cpy.name->getStr());
 
 	if (cpy.lastAward == nullptr) { lastAward = nullptr; }
-	else lastAward = new String(*cpy.lastAward);
+	else lastAward = new String(cpy.lastAward->getStr());
 
 	if (cpy.university == nullptr) { university = nullptr; }
-	else university = new String(*cpy.university);
+	else university = new String(cpy.university->getStr());
 
 	movieCount = cpy.movieCount;
 	movieViews = cpy.movieViews;
@@ -106,17 +116,16 @@ void Director::setMovie(const char *movieName, const double price, const char *a
 
 void Director::updateRevenue() {
 	revenuePerMovie = movieCount * constant;
-	cout << revenuePerMovie << endl;
 }
 
 void Director::calculateEarnings() {
 	 earnings = revenuePerMovie * movieViews;
-	 cout << earnings;
 }
 
 void Director::showInfo() const {
 	cout << *this->name << "'s most liked movie is '" << bestMovie->getTitle() << "'.\nHe studied at " << *university << ".\n";
 	cout << "Having directed " << movieCount << " movies, he gained over " << movieViews << " views worldwide.\n";
+	cout << "Last award: " << *lastAward << endl;
 }
 
 String *Director::getName() const {
@@ -151,17 +160,19 @@ void Director::setEarnings(double earnings) {
 	Director::earnings = earnings;
 }
 
-//int main() {
-//	Director d1("Mihai Bercea", "La leagane");
-//	Director d2("Eugen Cotitu", "Pe afara", "best burger 2021");
-//	Director d3("Bromaniac", "Berceni", "Teambuilding", 10.00);
-//	Director d4("Quentin Bambino", "La furat", "A fost odata ca niciodata in Balotexas", 14.55, "Club99 - aproape micutzu");
-//
-//	d4.setMovie("Minecraft SMP", 19.33);
-//	d4.showInfo();
-//	d4.updateRevenue();
-//	d4.calculateEarnings();
-//
-//	return 0;
-//}
+int main() {
+	Director d1("Mihai Bercea", "La leagane");
+	Director d2("Eugen Cotitu", "Pe afara", "best burger 2021");
+	Director d3("Bromaniac", "Berceni", "Teambuilding", 10.00);
+	Director d4("Quentin Bambino", "La furat", "A fost odata ca niciodata in Balotexas", 14.55, "Club99 - aproape micutzu");
+
+	d4.setMovie("Minecraft SMP", 19.33);
+	d4.showInfo();
+	Director dcopy(d4);
+	dcopy.showInfo();
+	d4.updateRevenue();
+	d4.calculateEarnings();
+
+	return 0;
+}
 

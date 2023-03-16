@@ -21,10 +21,10 @@ Movie::Movie(const Movie &cpy) {
 	if (bestAward != nullptr) { delete bestAward; }
 
 	if (cpy.title == nullptr) { title = nullptr; }
-	else title = new String(*cpy.title);
+	else title = new String(cpy.title->getStr());
 
 	if (cpy.bestAward == nullptr) { bestAward = nullptr; }
-	else bestAward = new String(*cpy.bestAward);
+	else bestAward = new String(cpy.bestAward->getStr());
 
 	rating = cpy.rating;
 	viewCount = cpy.viewCount;
@@ -36,10 +36,10 @@ Movie &Movie::operator=(const Movie &cpy) {
 	if (bestAward != nullptr) { delete bestAward; }
 
 	if (cpy.title == nullptr) { title = nullptr; }
-	else title = new String(*cpy.title);
+	else title = new String(cpy.title->getStr());
 
 	if (cpy.bestAward == nullptr) { bestAward = nullptr; }
-	else bestAward = new String(*cpy.bestAward);
+	else bestAward = new String(cpy.bestAward->getStr());
 
 	rating = cpy.rating;
 	viewCount = cpy.viewCount;
@@ -69,16 +69,31 @@ std::ostream &operator<<(ostream &os, Movie &mov) {
 	os << " has reached " << mov.viewCount << " views ";
 	os << "and has been awarded the " << *mov.bestAward << " award.\n";
 	os << "Rating: " << mov.rating << "/5 stars.";
+	return os;
 }
 
 char *Movie::getTitle() const {
 	return title->getStr();
 }
 
+double Movie::getPrice() const {
+	return price;
+}
+
+String *Movie::getBestAward() const {
+	return bestAward;
+}
+
 //int main() {
 //	Movie Matrix("Matrix", 120.33, "Golden Globe");
 //	Matrix.addAward("Emmy");
-//	cout << Matrix;
+//	cout << Matrix << endl;
+//
+//	Movie m1(Matrix);
+//	cout << m1 << endl;
+//	Movie m2;
+//	m2 = m1;
+//	cout << m2;
 //
 //	return 0;
 //}

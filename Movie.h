@@ -24,6 +24,10 @@ public:
 	void increaseViewCount();
 	void calculateRating();
 	friend std::ostream& operator<<(std::ostream& os, Movie& mov);
+
+	double getPrice() const;
+
+	String *getBestAward() const;
 };
 
 
