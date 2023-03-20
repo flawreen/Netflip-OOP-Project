@@ -5,6 +5,7 @@
 #ifndef NETFLIP_MOVIE_H
 #define NETFLIP_MOVIE_H
 #include "String.h"
+#include <iostream>
 
 class Movie {
 	String *title, *bestAward;
@@ -19,15 +20,16 @@ public:
 	Movie& operator=(const Movie& cpy);
 
 	char* getTitle() const;
-
 	void addAward(const char* award);
 	void increaseViewCount();
 	void calculateRating();
 	friend std::ostream& operator<<(std::ostream& os, Movie& mov);
-
 	double getMoviePrice() const;
-
 	String *getBestAward() const;
+	void setTitle(char *title);
+	void setBestAward(char *bestAward);
+	void setMoviePrice(double moviePrice);
+
 };
 
 

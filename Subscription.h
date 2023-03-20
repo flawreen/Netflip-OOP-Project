@@ -7,6 +7,7 @@
 
 
 #include "String.h"
+#include <iostream>
 
 class Subscription {
 	double subscriptionPrice, discountedValue;
@@ -14,10 +15,17 @@ class Subscription {
 public:
 	Subscription();
 	Subscription(const char* plan, const char* discountCode, const char* streamingQuality, double subscriptionPrice);
+	~Subscription();
+	Subscription(const Subscription& cpy);
+	Subscription& operator=(const Subscription& cpy);
+	friend std::ostream& operator<<(std::ostream& os, Subscription& sub);
 
 	void applyDiscount(const char* code);
+	void setSubscriptionPrice(double subscriptionPrice);
+	void setDiscountCode(char *discountCode);
+	void setSubscriptionPlan(char *subscriptionPlan);
+	void setStreamingQuality(char *streamingQuality);
 	void revertPriceAfterBuy();
-
 	double getSubscriptionPrice() const;
 	String *getDiscountCode() const;
 	String *getSubscriptionPlan() const;

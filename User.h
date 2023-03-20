@@ -20,12 +20,24 @@ class User {
 public:
 	User();
 	User(const char* name, const char* mail, const char* phone);
-	// TODO creare de cont
+	~User();
+	User(const User& cpy);
+	User& operator=(const User& cpy);
+
 	void buyMovie(Movie& movie);
 	void watchMovie();
 	void addBalance(double money);
 	void buySubscription(Subscription& plan);
 	void buySubscription(Subscription& plan, const char* discount);
+	friend std::ostream& operator<<(std::ostream &os, User& user);
+
+	void setBoughtMovie(Movie *boughtMovie);
+	void setName(char *name);
+	void setMail(char *mail);
+	void setPhone(char *phone);
+	void setUserPlan(Subscription *userPlan);
+	void setBalance(double balance);
+	void setBoughtMoviesCounter(int boughtMoviesCounter);
 
 };
 

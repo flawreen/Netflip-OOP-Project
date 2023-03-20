@@ -48,8 +48,8 @@ Movie &Movie::operator=(const Movie &cpy) {
 }
 
 Movie::~Movie() {
-	delete title;
-	delete bestAward;
+	if(title) delete title;
+	if(bestAward) delete bestAward;
 }
 
 void Movie::addAward(const char *award) {
@@ -66,8 +66,10 @@ void Movie::increaseViewCount() {
 
 std::ostream &operator<<(ostream &os, Movie &mov) {
 	cout << *mov.title;
-	os << " has reached " << mov.viewCount << " views ";
-	os << "and has been awarded the " << *mov.bestAward << " award.\n";
+	os << " has reached " << mov.viewCount << " views";
+	if (mov.bestAward) {
+		os << " and has been awarded the " << *mov.bestAward << " award.\n";
+	} else os << ".";
 	os << "Rating: " << mov.rating << "/5 stars.";
 	return os;
 }
@@ -84,20 +86,17 @@ String *Movie::getBestAward() const {
 	return bestAward;
 }
 
-//int main() {
-//	Movie Matrix("Matrix", 120.33, "Golden Globe");
-//	Matrix.addAward("Emmy");
-//	cout << Matrix << endl;
-//
-//	Movie m1(Matrix);
-//	cout << m1 << endl;
-//	Movie m2;
-//	m2 = m1;
-//	cout << m2;
-//
-//	return 0;
-//}
+void Movie::setTitle(char *title) {
+	Movie::title = new String(title);
+}
 
+void Movie::setBestAward(char *bestAward) {
+	Movie::bestAward = new String(bestAward);
+}
+
+void Movie::setMoviePrice(double moviePrice) {
+	Movie::moviePrice = moviePrice;
+}
 
 
 

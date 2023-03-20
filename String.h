@@ -1,6 +1,8 @@
 #ifndef POO_STRING_H
 #define POO_STRING_H
 
+#include <iostream>
+
 class String {
     char* str;
     int size;

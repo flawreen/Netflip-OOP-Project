@@ -5,12 +5,13 @@ using namespace std;
 
 String::String() {
     str = nullptr;
+	size = 0;
 }
 
 String::String(const char *s) {
     size = strlen(s);
     str = new char[size+1];
-    strncpy(str, s, size);
+    strncpy(str, s, size+1);
 }
 
 String::String(const String& cpy) {
@@ -20,7 +21,10 @@ String::String(const String& cpy) {
 	size = cpy.size;
 	if (cpy.str == nullptr) {
 		str = nullptr;
-	} else strcpy(str, cpy.str);
+	} else {
+		str = new char[size+1];
+		strcpy(str, cpy.str);
+	}
 }
 
 String &String::operator=(const String &cpy) {
@@ -30,14 +34,17 @@ String &String::operator=(const String &cpy) {
 	size = cpy.size;
 	if (cpy.str == nullptr) {
 		str = nullptr;
-	} else strcpy(str, cpy.str);
+	} else {
+		str = new char[size];
+		strcpy(str, cpy.str);
+	}
 	return *this;
 }
 
 String::~String() {
-    if (nullptr != str) {
-            delete[] str;
-    }
+	if(str) delete[] str;
+	str = nullptr;
+
 }
 
 String String::operator+ (const String& a) {
@@ -82,27 +89,3 @@ void String::operator[](const char *substr) {
 char* String::getStr() const {
 	return this->str;
 }
-
-//int main() {
-//    String sir("Ana are");
-//    cout << sir << endl;
-//
-//    // copiere
-//    String sir2("mere");
-//    cout << sir2 << endl;
-//
-//    // append
-//	sir += ' ';
-//    sir += '2';
-//	sir += ' ';
-//    cout << sir << endl;
-//
-//    // concatenare
-//    String concatenare = sir + sir2;
-//    cout << concatenare << endl;
-//
-//    //  cautare
-//    sir["a"];
-//
-//    return 0;
-//}

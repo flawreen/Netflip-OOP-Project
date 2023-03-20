@@ -92,4 +92,103 @@ void User::buySubscription(Subscription &plan, const char *discount) {
 	}
 }
 
+User::~User() {
+	if (name) delete name;
+	if (boughtMovie) boughtMovie = nullptr; // nu sterg obiectul de tip Movie, sterg doar asocierea lui cu User
+	if (mail) delete mail;
+	if (phone) delete phone;
+	if (userPlan) userPlan = nullptr; // la fel ca la boughtMovie
+}
+
+User::User(const User &cpy) {
+	balance = cpy.balance;
+	boughtMoviesCounter = cpy.boughtMoviesCounter;
+	if (name) delete name;
+	if (mail) delete mail;
+	if (phone) delete phone;
+	if (boughtMovie) boughtMovie = nullptr;
+	if (userPlan) userPlan = nullptr;
+
+	if (cpy.name == nullptr) name = nullptr;
+	else name = new String(cpy.name->getStr());
+
+	if (cpy.mail == nullptr) mail = nullptr;
+	else mail = new String(cpy.mail->getStr());
+
+	if (cpy.phone == nullptr) phone = nullptr;
+	else phone = new String(cpy.phone->getStr());
+
+	if (cpy.boughtMovie == nullptr) boughtMovie = nullptr;
+	else *boughtMovie = *cpy.boughtMovie;
+
+	if (cpy.userPlan == nullptr) userPlan = nullptr;
+	else *userPlan = *cpy.userPlan;
+}
+
+User &User::operator=(const User &cpy) {
+	balance = cpy.balance;
+	boughtMoviesCounter = cpy.boughtMoviesCounter;
+	if (name) delete name;
+	if (mail) delete mail;
+	if (phone) delete phone;
+	if (boughtMovie) boughtMovie = nullptr;
+	if (userPlan) userPlan = nullptr;
+
+	if (cpy.name == nullptr) name = nullptr;
+	else name = new String(cpy.name->getStr());
+
+	if (cpy.mail == nullptr) mail = nullptr;
+	else mail = new String(cpy.mail->getStr());
+
+	if (cpy.phone == nullptr) phone = nullptr;
+	else phone = new String(cpy.phone->getStr());
+
+	if (cpy.boughtMovie == nullptr) boughtMovie = nullptr;
+	else *boughtMovie = *cpy.boughtMovie;
+
+	if (cpy.userPlan == nullptr) userPlan = nullptr;
+	else *userPlan = *cpy.userPlan;
+	return *this;
+}
+
+std::ostream &operator<<(ostream &os, User &user) {
+	if (user.name == nullptr) {
+		os << "No account created.\n";
+		return os;
+	}
+	os << "You have bought " << user.boughtMoviesCounter << " movie(s): ";
+	if (user.boughtMovie) os << user.boughtMovie->getTitle();
+	else os << "-";
+	os << ".\nBalance: $" << user.balance << ".";
+	return os;
+}
+
+void User::setBoughtMovie(Movie *boughtMovie) {
+	User::boughtMovie = boughtMovie;
+}
+
+void User::setName(char *name) {
+	User::name = new String(name);
+}
+
+void User::setMail(char *mail) {
+	User::mail = new String(mail);
+}
+
+void User::setPhone(char *phone) {
+	User::phone = new String(phone);
+}
+
+void User::setUserPlan(Subscription *userPlan) {
+	User::userPlan = userPlan;
+}
+
+void User::setBalance(double balance) {
+	User::balance = balance;
+}
+
+void User::setBoughtMoviesCounter(int boughtMoviesCounter) {
+	User::boughtMoviesCounter = boughtMoviesCounter;
+}
+
 

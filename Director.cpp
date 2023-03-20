@@ -29,17 +29,17 @@ Director::Director(const char *name, const char *university, const char *movieNa
 				   movieCount(1), movieViews(0), revenuePerMovie(1 * constant), earnings(0.0) {}
 
 Director::Director(const Director &cpy) {
-	if (bestMovie != nullptr) { delete bestMovie; }
-	if (name != nullptr) { delete name; }
-	if (lastAward != nullptr) { delete lastAward; }
-	if (university != nullptr) { delete university; }
+	if (bestMovie) { delete bestMovie; }
+	if (name) { delete name; }
+	if (lastAward) { delete lastAward; }
+	if (university) { delete university; }
 
 	if (cpy.bestMovie == nullptr) { bestMovie = nullptr; }
 	else {
 		if (cpy.bestMovie->getBestAward() != nullptr) {
-			bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getPrice(), cpy.bestMovie->getBestAward()->getStr());
+			bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getMoviePrice(), cpy.bestMovie->getBestAward()->getStr());
 		}
-		else bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getPrice());
+		else bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getMoviePrice());
 	}
 
 	if (cpy.name == nullptr) { name = nullptr; }
@@ -88,10 +88,10 @@ Director& Director::operator=(const Director &cpy) {
 }
 
 Director::~Director() {
-	delete bestMovie;
-	delete name;
-	delete lastAward;
-	delete university;
+	if (bestMovie) delete bestMovie;
+	if (name) delete name;
+	if (lastAward) delete lastAward;
+	if (university) delete university;
 }
 
 void Director::setMovie(const char *movieName, const double price) {
@@ -159,20 +159,4 @@ void Director::setRevenuePerMovie(double revenuePerMovie) {
 void Director::setEarnings(double earnings) {
 	Director::earnings = earnings;
 }
-
-//int main() {
-//	Director d1("Mihai Bercea", "La leagane");
-//	Director d2("Eugen Cotitu", "Pe afara", "best burger 2021");
-//	Director d3("Bromaniac", "Berceni", "Teambuilding", 10.00);
-//	Director d4("Quentin Bambino", "La furat", "A fost odata ca niciodata in Balotexas", 14.55, "Club99 - aproape micutzu");
-//
-//	d4.setMovie("Minecraft SMP", 19.33);
-//	d4.showInfo();
-//	Director dcopy(d4);
-//	dcopy.showInfo();
-//	d4.updateRevenue();
-//	d4.calculateEarnings();
-//
-//	return 0;
-//}
 
