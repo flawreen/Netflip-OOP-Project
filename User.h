@@ -38,6 +38,8 @@ public:
 	void setUserPlan(Subscription *userPlan);
 	void setBalance(double balance);
 	void setBoughtMoviesCounter(int boughtMoviesCounter);
+	double getBalance() const;
+	String *getName() const;
 
 };
 

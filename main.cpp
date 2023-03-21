@@ -5,9 +5,7 @@
 #include <iostream>
 #include "Subscription.h"
 #include "User.h"
-#include "Director.h"
 #include "Movie.h"
-#include "String.h"
 using namespace std;
 
 void createUser(User& u) {
@@ -63,22 +61,13 @@ void createMovie(Movie& mov) {
 	if (award[0]) mov.setBestAward(award);
 }
 
-int main() {
-	Subscription free;
-	Subscription premium("Premium", "nflip112", "4K", 199.89);
-	User u1;
-	User u2("Mircea", "mircea.boss@hotmail.com", "0712233456");
-	Director d1("Quentin Bambino", "La furat", "A fost odata ca niciodata in Balotexas", 14.55, "Club99 - aproape micutzu");
-	Movie *Matrix = new Movie("Matrix", 120.33, "Golden Globe");
-	u2.addBalance(999.99);
-	u2.buySubscription(premium);
-	u2.buyMovie(*Matrix);
 
+int main() {
 	char option;
 	User user;
 	Subscription sub;
 	Movie mov;
-	cout << "1) Create user;\n2) Create subscription plan;\n3) Create movie;\n4) User panel;\nx) Exit.\n";
+	cout << "1) Create user;\n2) Create subscription plan;\n3) Create movie;\n4) Add balance;\nx) Exit.\n";
 	cout << "Choose option[1/2/3/4/x]: ";
 	cin >> option;
 	cin.get();
@@ -98,7 +87,11 @@ int main() {
 				cout << mov << endl;
 				break;
 			case '4':
-				cout << option;
+				double amount;
+				cout << "Current balance: " << user.getBalance();
+				cout << "\nEnter amount: ";
+				cin >> amount;
+				user.addBalance(amount);
 				break;
 			default:
 				cout << "Choose a valid option!";
@@ -111,3 +104,4 @@ int main() {
 
 	return 0;
 }
+

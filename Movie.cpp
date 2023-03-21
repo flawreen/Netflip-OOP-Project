@@ -69,7 +69,7 @@ std::ostream &operator<<(ostream &os, Movie &mov) {
 	os << " has reached " << mov.viewCount << " views";
 	if (mov.bestAward) {
 		os << " and has been awarded the " << *mov.bestAward << " award.\n";
-	} else os << ".";
+	} else os << ". ";
 	os << "Rating: " << mov.rating << "/5 stars.";
 	return os;
 }

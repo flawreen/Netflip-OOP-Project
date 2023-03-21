@@ -33,7 +33,10 @@ void User::buyMovie(Movie& movie) {
 }
 
 void User::watchMovie() {
-	if (boughtMovie == nullptr) {
+	if (name == nullptr) {
+		cout << "Create an account first!\n";
+		return;
+	} else if (boughtMovie == nullptr) {
 		cout << "You haven't bought any movie.\n";
 		return;
 	}
@@ -45,6 +48,7 @@ void User::watchMovie() {
 void User::addBalance(const double money) {
 	if (name != nullptr) {
 		balance += money;
+		cout << "New balance: " << balance << endl;
 	} else cout << "Create an account first!\n";
 }
 
@@ -53,7 +57,6 @@ void User::buySubscription(Subscription &plan) {
 		cout << "Create an account first!\n";
 		return;
 	}
-
 	if (balance < plan.getSubscriptionPrice()) {
 		cout << "Not enough balance.\n";
 		return;
@@ -189,6 +192,14 @@ void User::setBalance(double balance) {
 
 void User::setBoughtMoviesCounter(int boughtMoviesCounter) {
 	User::boughtMoviesCounter = boughtMoviesCounter;
+}
+
+double User::getBalance() const {
+	return balance;
+}
+
+String *User::getName() const {
+	return name;
 }
 
 
