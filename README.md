@@ -26,10 +26,13 @@
 - Fixed the copy constructors and operator= overloading for Director and Movie classes;
 
 [v0.6-alpha](https://github.com/flawreen/Netflip/releases/tag/v0.6-alpha):
-- Added User and Subscription classes, modified some variable names in Movie class.
+- Added User and Subscription classes, modified some variable names in Movie class;
 
 [v0.7-alpha](https://github.com/flawreen/Netflip/releases/tag/v0.7-alpha):
 - Added copy constructor, operator= and destructor + tests;
 
 [v0.8-alpha](https://github.com/flawreen/Netflip/releases/tag/v0.8-alpha):
-- Added command line menu \*work in progress\*
+- Added command line menu \*work in progress\*;
+
+[v0.9-alpha](https://github.com/flawreen/Netflip/releases/tag/v0.9-alpha):
+- Finished command line menu;
