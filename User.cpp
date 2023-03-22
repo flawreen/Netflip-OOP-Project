@@ -7,23 +7,23 @@
 using namespace std;
 #include "User.h"
 
-User::User() : name(nullptr), mail(nullptr), phone(nullptr), userPlan(nullptr),
+User::User() : name(""), mail(""), phone(""), userPlan(nullptr),
 				balance(0.0), boughtMoviesCounter(0), boughtMovie(nullptr) {}
 
-User::User(const char *name, const char *mail, const char *phone) :
-				name(new String(name)), mail(new String(mail)), boughtMovie(nullptr),
-				phone(new String(phone)), balance(0.0), boughtMoviesCounter(0)
+User::User(string name, string mail, string phone) :
+				name(name), mail(mail), boughtMovie(nullptr),
+				phone(phone), balance(0.0), boughtMoviesCounter(0)
 	{userPlan = new Subscription();}
 
 void User::buyMovie(Movie& movie) {
 	if (boughtMovie != nullptr) {
 		cout << "You can't buy another movie!\n";
-	} else if (name != nullptr) {
+	} else if (!name.empty()) {
 		if (balance < movie.getMoviePrice()) {
 			cout << "Not enough balance.\n";
 			return;
 		} else {
-			if (strcmp(userPlan->getSubscriptionPlan()->getStr(), "FREE") == 0) {
+			if (userPlan->getSubscriptionPlan() == "FREE") {
 				balance -= movie.getMoviePrice();
 			}
 			++boughtMoviesCounter;
@@ -33,7 +33,7 @@ void User::buyMovie(Movie& movie) {
 }
 
 void User::watchMovie() {
-	if (name == nullptr) {
+	if (name.empty()) {
 		cout << "Create an account first!\n";
 		return;
 	} else if (boughtMovie == nullptr) {
@@ -42,18 +42,18 @@ void User::watchMovie() {
 	}
 	boughtMovie->increaseViewCount();
 	cout << "You are now watching " << boughtMovie->getTitle() << " in ";
-	cout << userPlan->getStreamingQuality()->getStr() << " resolution.\n";
+	cout << userPlan->getStreamingQuality() << " resolution.\n";
 }
 
 void User::addBalance(const double money) {
-	if (name != nullptr) {
+	if (!name.empty()) {
 		balance += money;
 		cout << "New balance: " << balance << endl;
 	} else cout << "Create an account first!\n";
 }
 
 void User::buySubscription(Subscription &plan) {
-	if (name == nullptr) {
+	if (name.empty()) {
 		cout << "Create an account first!\n";
 		return;
 	}
@@ -72,8 +72,8 @@ void User::buySubscription(Subscription &plan) {
 	}
 }
 
-void User::buySubscription(Subscription &plan, const char *discount) {
-	if (name == nullptr) {
+void User::buySubscription(Subscription &plan, string discount) {
+	if (name.empty()) {
 		cout << "Create an account first!\n";
 		return;
 	}
@@ -96,30 +96,16 @@ void User::buySubscription(Subscription &plan, const char *discount) {
 }
 
 User::~User() {
-	if (name) delete name;
 	if (boughtMovie) boughtMovie = nullptr; // nu sterg obiectul de tip Movie, sterg doar asocierea lui cu User
-	if (mail) delete mail;
-	if (phone) delete phone;
 	if (userPlan) userPlan = nullptr; // la fel ca la boughtMovie
 }
 
 User::User(const User &cpy) {
 	balance = cpy.balance;
 	boughtMoviesCounter = cpy.boughtMoviesCounter;
-	if (name) delete name;
-	if (mail) delete mail;
-	if (phone) delete phone;
-	if (boughtMovie) boughtMovie = nullptr;
-	if (userPlan) userPlan = nullptr;
-
-	if (cpy.name == nullptr) name = nullptr;
-	else name = new String(cpy.name->getStr());
-
-	if (cpy.mail == nullptr) mail = nullptr;
-	else mail = new String(cpy.mail->getStr());
-
-	if (cpy.phone == nullptr) phone = nullptr;
-	else phone = new String(cpy.phone->getStr());
+	name = cpy.name;
+	mail = cpy.mail;
+	phone = cpy.phone;
 
 	if (cpy.boughtMovie == nullptr) boughtMovie = nullptr;
 	else *boughtMovie = *cpy.boughtMovie;
@@ -131,20 +117,9 @@ User::User(const User &cpy) {
 User &User::operator=(const User &cpy) {
 	balance = cpy.balance;
 	boughtMoviesCounter = cpy.boughtMoviesCounter;
-	if (name) delete name;
-	if (mail) delete mail;
-	if (phone) delete phone;
-	if (boughtMovie) boughtMovie = nullptr;
-	if (userPlan) userPlan = nullptr;
-
-	if (cpy.name == nullptr) name = nullptr;
-	else name = new String(cpy.name->getStr());
-
-	if (cpy.mail == nullptr) mail = nullptr;
-	else mail = new String(cpy.mail->getStr());
-
-	if (cpy.phone == nullptr) phone = nullptr;
-	else phone = new String(cpy.phone->getStr());
+	name = cpy.name;
+	mail = cpy.mail;
+	phone = cpy.phone;
 
 	if (cpy.boughtMovie == nullptr) boughtMovie = nullptr;
 	else *boughtMovie = *cpy.boughtMovie;
@@ -155,7 +130,7 @@ User &User::operator=(const User &cpy) {
 }
 
 std::ostream &operator<<(ostream &os, User &user) {
-	if (user.name == nullptr) {
+	if (user.name.empty()) {
 		os << "No account created.\n";
 		return os;
 	}
@@ -170,16 +145,22 @@ void User::setBoughtMovie(Movie *boughtMovie) {
 	User::boughtMovie = boughtMovie;
 }
 
-void User::setName(char *name) {
-	User::name = new String(name);
+void User::setName(string name) {
+	User::name = name;
 }
 
-void User::setMail(char *mail) {
-	User::mail = new String(mail);
+void User::setMail(string mail) {
+	User::mail = mail;
 }
 
-void User::setPhone(char *phone) {
-	User::phone = new String(phone);
+void User::setPhone(string phone) {
+	for (auto x : phone) {
+		if (!isdigit(x)) {
+			cout << "Invalid phone number.\n";
+			return;
+		}
+	}
+	User::phone = phone;
 }
 
 void User::setUserPlan(Subscription *userPlan) {
@@ -198,7 +179,7 @@ double User::getBalance() const {
 	return balance;
 }
 
-String *User::getName() const {
+string User::getName() const {
 	return name;
 }
 

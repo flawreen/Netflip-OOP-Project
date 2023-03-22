@@ -6,30 +6,32 @@
 #define NETFLIP_SUBSCRIPTION_H
 
 
-#include "String.h"
+#include <string>
+#include <vector>
 #include <iostream>
+using namespace std;
 
 class Subscription {
 	double subscriptionPrice, discountedValue;
-	String* discountCode, *subscriptionPlan, *streamingQuality;
+	string discountCode, subscriptionPlan, streamingQuality;
 public:
 	Subscription();
-	Subscription(const char* plan, const char* discountCode, const char* streamingQuality, double subscriptionPrice);
+	Subscription(string plan, string discountCode, string streamingQuality, double subscriptionPrice);
 	~Subscription();
 	Subscription(const Subscription& cpy);
 	Subscription& operator=(const Subscription& cpy);
 	friend std::ostream& operator<<(std::ostream& os, Subscription& sub);
 
-	void applyDiscount(const char* code);
+	void applyDiscount(string code);
 	void setSubscriptionPrice(double subscriptionPrice);
-	void setDiscountCode(char *discountCode);
-	void setSubscriptionPlan(char *subscriptionPlan);
-	void setStreamingQuality(char *streamingQuality);
+	void setDiscountCode(string discountCode);
+	void setSubscriptionPlan(string subscriptionPlan);
+	void setStreamingQuality(string streamingQuality);
 	void revertPriceAfterBuy();
 	double getSubscriptionPrice() const;
-	String *getDiscountCode() const;
-	String *getSubscriptionPlan() const;
-	String *getStreamingQuality() const;
+	string getDiscountCode() const;
+	string getSubscriptionPlan() const;
+	string getStreamingQuality() const;
 
 };
 
