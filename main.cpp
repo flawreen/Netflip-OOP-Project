@@ -3,19 +3,21 @@
 //
 
 #include <iostream>
+#include <string>
 #include "Subscription.h"
 #include "User.h"
+#include "Director.h"
 #include "Movie.h"
 using namespace std;
 
 void createUser(User& u) {
-	char nume[20], mail[40], phone[11];
+	string nume, mail, phone;
 	cout << "Full name: ";
-	cin.getline(nume, 20, '\n');
+	getline(cin, nume, '\n');
 	cout << "Mail address: ";
-	cin.getline(mail, 40, '\n');
+	getline(cin, mail, '\n');
 	cout << "Phone number: ";
-	cin.getline(phone, 10, '\n');
+	getline(cin, phone, '\n');
 	u.setName(nume);
 	u.setMail(mail);
 	u.setPhone(phone);
@@ -30,15 +32,15 @@ void createSubscription(Subscription& sub) {
 		return; // constructorul default initializeaza abonamentul gratis
 	}
 
-	char name[20], code[20], quality[10], price[10];
+	string name, code, quality, price;
 	cout << "Subscription name: ";
-	cin.getline(name, 20, '\n');
+	getline(cin, name, '\n');
 	cout << "Discount code (15%): ";
-	cin.getline(code, 20, '\n');
+	getline(cin, code, '\n');
 	cout << "Streaming quality: ";
-	cin.getline(quality, 10, '\n');
+	getline(cin, quality, '\n');
 	cout << "Subscription price: ";
-	cin.getline(price, 10, '\n');
+	getline(cin, price, '\n');
 
 	sub.setSubscriptionPlan(name);
 	sub.setDiscountCode(code);
@@ -47,22 +49,33 @@ void createSubscription(Subscription& sub) {
 }
 
 void createMovie(Movie& mov) {
-	char title[30], price[10], award[30];
+	string title, price, award;
 
 	cout << "Movie title: ";
-	cin.getline(title, 30, '\n');
+	getline(cin, title, '\n');
 	cout << "Movie price: ";
-	cin.getline(price, 10, '\n');
+	getline(cin, price, '\n');
 	cout << "Movie award [press enter to skip]: ";
-	cin.getline(award, 30, '\n');
+	getline(cin, award, '\n');
 
 	mov.setTitle(title);
 	mov.setMoviePrice(stod(price));
-	if (award[0]) mov.setBestAward(award);
+	if (!award.empty()) mov.setBestAward(award);
 }
 
 
 int main() {
+	Subscription free;
+	Subscription premium("Premium", "nflip112", "4K", 199.89);
+	User u1;
+	User u2("Mircea", "mircea.boss@hotmail.com", "0712233456");
+	Director d2;
+	Director d1("Quentin Bambino", "La furat", "A fost odata ca niciodata in Balotexas", 14.55, "Club99 - aproape micutzu");
+	Movie *Matrix = new Movie("Matrix", 120.33, "Golden Globe");
+	u2.addBalance(999.99);
+	u2.buySubscription(premium);
+	u2.buyMovie(*Matrix);
+
 	char option;
 	User user;
 	Subscription sub;

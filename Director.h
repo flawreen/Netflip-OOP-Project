@@ -11,24 +11,24 @@
 class Director {
 	//	Movie* filmography = new Movie[10];
 	Movie *bestMovie;
-	String *name, *lastAward, *university;
+	string name, lastAward, university;
 	int movieCount, movieViews;
 	double revenuePerMovie, earnings;
 	constexpr static double constant = 0.00133129;
 
 public:
 	Director();
-	Director(const char* name, const char* university);
-	Director(const char* name, const char* university, const char *award);
-	Director(const char* name, const char* university, const char* movieName, double price);
-	Director(const char* name, const char* university, const char* movieName, double price, const char* award);
+	Director(string name, string university);
+	Director(string ame, string university, string award);
+	Director(string name, string university, string movieName, double price);
+	Director(string name, string university, string movieName, double price, string award);
 	Director(const Director& cpy);
 	~Director();
 
 	Director& operator=(const Director& cpy);
 
-	void setMovie(const char* movieName, double price);
-	void setMovie(const char* movieName, double price, const char* award);
+	void setMovie(string movieName, double price);
+	void setMovie(string movieName, double price, string award);
 	void updateRevenue();
 	void calculateEarnings();
 	void showInfo() const;
@@ -37,7 +37,7 @@ public:
 	int getMovieCount() const;
 	int getMovieViews() const;
 	double getEarnings() const;
-	String *getName() const;
+	string getName() const;
 
 	void setMovieCount(int movieCount);
 	void setMovieViews(int movieViews);

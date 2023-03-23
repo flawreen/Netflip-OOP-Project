@@ -6,51 +6,40 @@
 #include "Director.h"
 using namespace std;
 
-Director::Director() : bestMovie(nullptr), name(nullptr), lastAward(nullptr), university(nullptr),
+Director::Director() : bestMovie(nullptr), name(""), lastAward(""), university(""),
 					movieCount(0), movieViews(0), revenuePerMovie(0.0), earnings(0.0) {}
 
-Director::Director(const char *name, const char *university) : name(new String(name)), university(new String(university)),
-					bestMovie(nullptr), lastAward(nullptr), movieCount(0), movieViews(0), revenuePerMovie(0.0), earnings(0.0) {}
+Director::Director(string name, string university) : name(name), university(university),
+					bestMovie(nullptr), lastAward(""), movieCount(0), movieViews(0), revenuePerMovie(0.0), earnings(0.0) {}
 
-Director::Director(const char *name, const char *university, const char *award)
-					: name(new String(name)), university(new String(university)),
-					lastAward(new String(award)),
+Director::Director(string name, string university, string award)
+					: name(name), university(university),
+					lastAward(award),
 					bestMovie(nullptr), movieCount(0), movieViews(0), revenuePerMovie(0), earnings(0.0) {}
 
-Director::Director(const char *name, const char *university, const char *movieName, const double price)
-					: name(new String(name)), university(new String(university)),
+Director::Director(string name, string university, string movieName, const double price)
+					: name(name), university(university),
 					bestMovie(new Movie(movieName, price)),
-					lastAward(nullptr), movieCount(1), movieViews(0), revenuePerMovie(1 * constant), earnings(0.0) {}
+					lastAward(""), movieCount(1), movieViews(0), revenuePerMovie(1 * constant), earnings(0.0) {}
 
-Director::Director(const char *name, const char *university, const char *movieName, const double price, const char *award)
-				   : name(new String(name)), university(new String(university)),
-				   lastAward(new String(award)),
+Director::Director(string name, string university, string movieName, const double price, string award)
+				   : name(name), university(university),
+				   lastAward(award),
 				   bestMovie(new Movie(movieName, price)),
 				   movieCount(1), movieViews(0), revenuePerMovie(1 * constant), earnings(0.0) {}
 
 Director::Director(const Director &cpy) {
-	if (bestMovie) { delete bestMovie; }
-	if (name) { delete name; }
-	if (lastAward) { delete lastAward; }
-	if (university) { delete university; }
-
 	if (cpy.bestMovie == nullptr) { bestMovie = nullptr; }
 	else {
-		if (cpy.bestMovie->getBestAward() != nullptr) {
-			bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getMoviePrice(), cpy.bestMovie->getBestAward()->getStr());
+		if (cpy.bestMovie->getBestAward().empty()) {
+			bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getMoviePrice(), cpy.bestMovie->getBestAward());
 		}
 		else bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getMoviePrice());
 	}
 
-	if (cpy.name == nullptr) { name = nullptr; }
-	else name = new String(cpy.name->getStr());
-
-	if (cpy.lastAward == nullptr) { lastAward = nullptr; }
-	else lastAward = new String(cpy.lastAward->getStr());
-
-	if (cpy.university == nullptr) { university = nullptr; }
-	else university = new String(cpy.university->getStr());
-
+	name = cpy.name;
+	lastAward = cpy.lastAward;
+	university = cpy.university;
 	movieCount = cpy.movieCount;
 	movieViews = cpy.movieViews;
 	revenuePerMovie = cpy.revenuePerMovie;
@@ -58,28 +47,17 @@ Director::Director(const Director &cpy) {
 }
 
 Director& Director::operator=(const Director &cpy) {
-	if (bestMovie != nullptr) { delete bestMovie; }
-	if (name != nullptr) { delete name; }
-	if (lastAward != nullptr) { delete lastAward; }
-	if (university != nullptr) { delete university; }
-
 	if (cpy.bestMovie == nullptr) { bestMovie = nullptr; }
 	else {
-		if (cpy.bestMovie->getBestAward() != nullptr) {
-			bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getMoviePrice(), cpy.bestMovie->getBestAward()->getStr());
+		if (cpy.bestMovie->getBestAward().empty()) {
+			bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getMoviePrice(), cpy.bestMovie->getBestAward());
 		}
 		else bestMovie = new Movie(cpy.bestMovie->getTitle(), cpy.bestMovie->getMoviePrice());
 	}
 
-	if (cpy.name == nullptr) { name = nullptr; }
-	else name = new String(cpy.name->getStr());
-
-	if (cpy.lastAward == nullptr) { lastAward = nullptr; }
-	else lastAward = new String(cpy.lastAward->getStr());
-
-	if (cpy.university == nullptr) { university = nullptr; }
-	else university = new String(cpy.university->getStr());
-
+	name = cpy.name;
+	lastAward = cpy.lastAward;
+	university = cpy.university;
 	movieCount = cpy.movieCount;
 	movieViews = cpy.movieViews;
 	revenuePerMovie = cpy.revenuePerMovie;
@@ -88,15 +66,12 @@ Director& Director::operator=(const Director &cpy) {
 }
 
 Director::~Director() {
-	if (bestMovie) delete bestMovie;
-	if (name) delete name;
-	if (lastAward) delete lastAward;
-	if (university) delete university;
+	delete bestMovie;
 }
 
-void Director::setMovie(const char *movieName, const double price) {
+void Director::setMovie(string movieName, const double price) {
 	if (bestMovie != nullptr) {
-		cout << *this->name << "'s best movie is already added: ";
+		cout << this->name << "'s best movie is already added: ";
 		cout << bestMovie->getTitle() << endl;
 		return;
 	}
@@ -104,9 +79,9 @@ void Director::setMovie(const char *movieName, const double price) {
 	movieCount += 1;
 }
 
-void Director::setMovie(const char *movieName, const double price, const char *award) {
+void Director::setMovie(string movieName, const double price, string award) {
 	if (bestMovie != nullptr) {
-		cout << *this->name << "'s best movie is already added: ";
+		cout << this->name << "'s best movie is already added: ";
 		cout << bestMovie->getTitle() << endl;
 		return;
 	}
@@ -123,12 +98,12 @@ void Director::calculateEarnings() {
 }
 
 void Director::showInfo() const {
-	cout << *this->name << "'s most liked movie is '" << bestMovie->getTitle() << "'.\nHe studied at " << *university << ".\n";
+	cout << this->name << "'s most liked movie is '" << bestMovie->getTitle() << "'.\nHe studied at " << university << ".\n";
 	cout << "Having directed " << movieCount << " movies, he gained over " << movieViews << " views worldwide.\n";
-	cout << "Last award: " << *lastAward << endl;
+	cout << "Last award: " << lastAward << endl;
 }
 
-String *Director::getName() const {
+string Director::getName() const {
 	return name;
 }
 

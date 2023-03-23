@@ -7,40 +7,26 @@
 
 using namespace std;
 
-Movie::Movie() : title(nullptr), bestAward(nullptr), rating(0), viewCount(0), moviePrice(0) {}
+Movie::Movie() : title(""), bestAward(""), rating(0), viewCount(0), moviePrice(0) {}
 
-Movie::Movie(const char *title, double price) : title(new String(title)), bestAward(nullptr),
+Movie::Movie(string title, double price) : title(title), bestAward(""),
 												rating(0), viewCount(0), moviePrice(price) {}
 
-Movie::Movie(const char *title, double price, const char *award) : Movie(title, price) {
-	bestAward = new String(award);
+Movie::Movie(string title, double price, string award) : Movie(title, price) {
+	bestAward = award;
 }
 
 Movie::Movie(const Movie &cpy) {
-	if (title != nullptr) { delete title; }
-	if (bestAward != nullptr) { delete bestAward; }
-
-	if (cpy.title == nullptr) { title = nullptr; }
-	else title = new String(cpy.title->getStr());
-
-	if (cpy.bestAward == nullptr) { bestAward = nullptr; }
-	else bestAward = new String(cpy.bestAward->getStr());
-
+	title = cpy.title;
+	bestAward = cpy.bestAward;
 	rating = cpy.rating;
 	viewCount = cpy.viewCount;
 	moviePrice = cpy.moviePrice;
 }
 
 Movie &Movie::operator=(const Movie &cpy) {
-	if (title != nullptr) { delete title; }
-	if (bestAward != nullptr) { delete bestAward; }
-
-	if (cpy.title == nullptr) { title = nullptr; }
-	else title = new String(cpy.title->getStr());
-
-	if (cpy.bestAward == nullptr) { bestAward = nullptr; }
-	else bestAward = new String(cpy.bestAward->getStr());
-
+	title = cpy.title;
+	bestAward = cpy.bestAward;
 	rating = cpy.rating;
 	viewCount = cpy.viewCount;
 	moviePrice = cpy.moviePrice;
@@ -48,13 +34,12 @@ Movie &Movie::operator=(const Movie &cpy) {
 }
 
 Movie::~Movie() {
-	if(title) delete title;
-	if(bestAward) delete bestAward;
+
 }
 
-void Movie::addAward(const char *award) {
-	if (bestAward == nullptr) {
-		bestAward = new String(award);
+void Movie::addAward(string award) {
+	if (bestAward.empty()) {
+		bestAward = award;
 	} else {
 		cout << "This movie already has an award.\n";
 	}
@@ -65,33 +50,33 @@ void Movie::increaseViewCount() {
 }
 
 std::ostream &operator<<(ostream &os, Movie &mov) {
-	cout << *mov.title;
+	os << mov.title;
 	os << " has reached " << mov.viewCount << " views";
-	if (mov.bestAward) {
-		os << " and has been awarded the " << *mov.bestAward << " award.\n";
+	if (!mov.bestAward.empty()) {
+		os << " and has been awarded the " << mov.bestAward << " award.\n";
 	} else os << ". ";
 	os << "Rating: " << mov.rating << "/5 stars.";
 	return os;
 }
 
-char *Movie::getTitle() const {
-	return title->getStr();
+string Movie::getTitle() const {
+	return title;
 }
 
 double Movie::getMoviePrice() const {
 	return moviePrice;
 }
 
-String *Movie::getBestAward() const {
+string Movie::getBestAward() const {
 	return bestAward;
 }
 
-void Movie::setTitle(char *title) {
-	Movie::title = new String(title);
+void Movie::setTitle(string title) {
+	Movie::title = title;
 }
 
-void Movie::setBestAward(char *bestAward) {
-	Movie::bestAward = new String(bestAward);
+void Movie::setBestAward(string bestAward) {
+	Movie::bestAward = bestAward;
 }
 
 void Movie::setMoviePrice(double moviePrice) {

@@ -6,20 +6,21 @@
 #define NETFLIP_USER_H
 
 
-#include "String.h"
+#include <string>
+#include <vector>
 #include "Subscription.h"
 #include "Movie.h"
 
 class User {
 	Movie* boughtMovie;
-	String *name, *mail, *phone;
+	string name, mail, phone;
 	Subscription* userPlan;
 	double balance;
 	int boughtMoviesCounter;
 
 public:
 	User();
-	User(const char* name, const char* mail, const char* phone);
+	User(string name, string mail, string phone);
 	~User();
 	User(const User& cpy);
 	User& operator=(const User& cpy);
@@ -28,18 +29,18 @@ public:
 	void watchMovie();
 	void addBalance(double money);
 	void buySubscription(Subscription& plan);
-	void buySubscription(Subscription& plan, const char* discount);
+	void buySubscription(Subscription& plan, string discount);
 	friend std::ostream& operator<<(std::ostream &os, User& user);
 
 	void setBoughtMovie(Movie *boughtMovie);
-	void setName(char *name);
-	void setMail(char *mail);
-	void setPhone(char *phone);
+	void setName(string name);
+	void setMail(string mail);
+	void setPhone(string phone);
 	void setUserPlan(Subscription *userPlan);
 	void setBalance(double balance);
 	void setBoughtMoviesCounter(int boughtMoviesCounter);
 	double getBalance() const;
-	String *getName() const;
+	string getName() const;
 
 };
 

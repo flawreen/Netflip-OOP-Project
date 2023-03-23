@@ -7,56 +7,40 @@
 using namespace std;
 
 Subscription::Subscription() : subscriptionPrice(0.0), discountedValue(0.0),
-								discountCode(nullptr),
-								subscriptionPlan(new String("Free")),
-								streamingQuality(new String("Full HD")) {}
+								discountCode(""),
+								subscriptionPlan("Free"),
+								streamingQuality("Full HD") {}
 
-Subscription::Subscription(const char *plan, const char *discountCode, const char *streamingQuality,
+Subscription::Subscription(string plan, string discountCode, string streamingQuality,
 						   double subscriptionPrice) : subscriptionPrice(subscriptionPrice),
 						   discountedValue(0.0),
-						   discountCode(new String(discountCode)),
-						   subscriptionPlan(new String(plan)),
-						   streamingQuality(new String(streamingQuality)) {}
+						   discountCode(discountCode),
+						   subscriptionPlan(plan),
+						   streamingQuality(streamingQuality) {}
 
 Subscription::Subscription(const Subscription &cpy) {
 	subscriptionPrice = cpy.subscriptionPrice;
 	discountedValue = cpy.discountedValue;
-	if (subscriptionPlan) delete subscriptionPlan;
-	if (discountCode) delete discountCode;
-	if (streamingQuality) delete streamingQuality;
-
-	if (cpy.subscriptionPlan == nullptr) subscriptionPlan = nullptr;
-	else subscriptionPlan = new String(cpy.subscriptionPlan->getStr());
-
-	if (cpy.discountCode == nullptr) discountCode = nullptr;
-	else discountCode = new String(cpy.discountCode->getStr());
-
-	if (cpy.streamingQuality == nullptr) streamingQuality = nullptr;
-	else streamingQuality = new String(cpy.streamingQuality->getStr());
+	subscriptionPlan = cpy.subscriptionPlan;
+	discountCode = cpy.discountCode;
+	streamingQuality = cpy.streamingQuality;
 }
 
 Subscription &Subscription::operator=(const Subscription &cpy) {
 	subscriptionPrice = cpy.subscriptionPrice;
 	discountedValue = cpy.discountedValue;
-	if (subscriptionPlan) delete subscriptionPlan;
-	if (discountCode) delete discountCode;
-	if (streamingQuality) delete streamingQuality;
-
-	if (cpy.subscriptionPlan == nullptr) subscriptionPlan = nullptr;
-	else subscriptionPlan = new String(cpy.subscriptionPlan->getStr());
-
-	if (cpy.discountCode == nullptr) discountCode = nullptr;
-	else discountCode = new String(cpy.discountCode->getStr());
-
-	if (cpy.streamingQuality == nullptr) streamingQuality = nullptr;
-	else streamingQuality = new String(cpy.streamingQuality->getStr());
+	subscriptionPrice = cpy.subscriptionPrice;
+	discountedValue = cpy.discountedValue;
+	subscriptionPlan = cpy.subscriptionPlan;
+	discountCode = cpy.discountCode;
+	streamingQuality = cpy.streamingQuality;
 	return *this;
 }
 
-void Subscription::applyDiscount(const char* code) {
+void Subscription::applyDiscount(string code) {
 	if (subscriptionPrice <= 0.0) {
 		cout << "You can't apply a discount code for this subscription!\n";
-	} else if (code == discountCode->getStr()) {
+	} else if (code == discountCode) {
 		discountedValue = subscriptionPrice * 0.15;
 		subscriptionPrice -= discountedValue;
 	} else {
@@ -73,31 +57,28 @@ double Subscription::getSubscriptionPrice() const {
 	return subscriptionPrice;
 }
 
-String *Subscription::getDiscountCode() const {
+string Subscription::getDiscountCode() const {
 	return discountCode;
 }
 
-String *Subscription::getSubscriptionPlan() const {
+string Subscription::getSubscriptionPlan() const {
 	return subscriptionPlan;
 }
 
-String *Subscription::getStreamingQuality() const {
+string Subscription::getStreamingQuality() const {
 	return streamingQuality;
 }
 
 Subscription::~Subscription() {
-	if (discountCode != nullptr) delete discountCode;
-	if (subscriptionPlan != nullptr) delete subscriptionPlan;
-	if (streamingQuality != nullptr) delete streamingQuality;
 }
 
 std::ostream &operator<<(ostream &os, Subscription &sub) {
-	if (sub.subscriptionPlan == nullptr) {
+	if (sub.subscriptionPlan.empty()) {
 		os << "No subscription found.\n";
 		return os;
 	}
-	os << "Your plan, " << sub.getSubscriptionPlan()->getStr();
-	os << ", can stream in " << sub.getStreamingQuality()->getStr();
+	os << "Your plan, " << sub.getSubscriptionPlan();
+	os << ", can stream in " << sub.getStreamingQuality();
 	os << " and can be bought for $" << sub.getSubscriptionPrice() << ".";
 	return os;
 }
@@ -106,16 +87,16 @@ void Subscription::setSubscriptionPrice(double subscriptionPrice) {
 	Subscription::subscriptionPrice = subscriptionPrice;
 }
 
-void Subscription::setDiscountCode(char *discountCode) {
-	Subscription::discountCode = new String(discountCode);
+void Subscription::setDiscountCode(string discountCode) {
+	Subscription::discountCode = discountCode;
 }
 
-void Subscription::setSubscriptionPlan(char *subscriptionPlan) {
-	Subscription::subscriptionPlan = new String(subscriptionPlan);
+void Subscription::setSubscriptionPlan(string subscriptionPlan) {
+	Subscription::subscriptionPlan = subscriptionPlan;
 }
 
-void Subscription::setStreamingQuality(char *streamingQuality) {
-	Subscription::streamingQuality = new String(streamingQuality);
+void Subscription::setStreamingQuality(string streamingQuality) {
+	Subscription::streamingQuality = streamingQuality;
 }
 
 

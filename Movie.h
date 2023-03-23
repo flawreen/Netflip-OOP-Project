@@ -4,30 +4,33 @@
 
 #ifndef NETFLIP_MOVIE_H
 #define NETFLIP_MOVIE_H
-#include "String.h"
+
+#include <string>
+#include <vector>
 #include <iostream>
+using namespace std;
 
 class Movie {
-	String *title, *bestAward;
+	string title, bestAward;
 	int rating, viewCount;
 	double moviePrice;
 public:
 	Movie();  // Default constructor
-	Movie(const char* title, double price);
-	Movie(const char* title, double price, const char* awards);
+	Movie(string title, double price);
+	Movie(string title, double price, string award);
 	Movie(const Movie &cpy);
 	~Movie();
 	Movie& operator=(const Movie& cpy);
 
-	char* getTitle() const;
-	void addAward(const char* award);
+	string getTitle() const;
+	void addAward(string award);
 	void increaseViewCount();
 	void calculateRating();
 	friend std::ostream& operator<<(std::ostream& os, Movie& mov);
 	double getMoviePrice() const;
-	String *getBestAward() const;
-	void setTitle(char *title);
-	void setBestAward(char *bestAward);
+	string getBestAward() const;
+	void setTitle(string title);
+	void setBestAward(string bestAward);
 	void setMoviePrice(double moviePrice);
 
 };
