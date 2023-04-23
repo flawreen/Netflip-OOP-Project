@@ -3,46 +3,63 @@
 //
 
 #include <iostream>
-#include <cstring>
+
 using namespace std;
+
 #include "User.h"
 
-User::User() : name(""), mail(""), phone(""), userPlan(nullptr),
-				balance(0.0), boughtMoviesCounter(0), boughtMovie(nullptr) {}
+User::User() : Person(), userPlan(nullptr), balance(0.0), boughtMoviesCounter(0) {}
 
-User::User(string name, string mail, string phone) :
-				name(name), mail(mail), boughtMovie(nullptr),
-				phone(phone), balance(0.0), boughtMoviesCounter(0)
-	{userPlan = new Subscription();}
+User::User(string name, string mail, string phone) : Person(name, mail, phone), balance(0.0),
+													 boughtMoviesCounter(0) { userPlan = new Subscription(); }
 
-void User::buyMovie(Movie& movie) {
-	if (boughtMovie != nullptr) {
-		cout << "You can't buy another movie!\n";
-	} else if (!name.empty()) {
+User::~User() {
+	boughtMovies.clear();
+	if (userPlan) userPlan = nullptr; // la fel ca la boughtMovie
+}
+
+void User::whoAmI() {
+	cout << "My name is " << name << "! You can contact me at any time by phone at " << phone;
+	cout << " or you can send me a mail at " << mail << "!\n";
+}
+
+void User::buyMovie(Movie &movie) {
+	if (!name.empty()) {
 		if (balance < movie.getMoviePrice()) {
 			cout << "Not enough balance.\n";
 			return;
 		} else {
 			if (userPlan->getSubscriptionPlan() == "FREE") {
 				balance -= movie.getMoviePrice();
+				boughtMovies.push_back(movie);
+			} else {
+				// Daca nu are abonamentul gratis atunci nu mai plateste pentru filme
+				boughtMovies.push_back(movie);
 			}
 			++boughtMoviesCounter;
-			boughtMovie = &movie;
 		}
 	} else cout << "Create an account first!\n";
 }
 
-void User::watchMovie() {
+void User::watchMovie(Movie &movie) {
 	if (name.empty()) {
 		cout << "Create an account first!\n";
 		return;
-	} else if (boughtMovie == nullptr) {
-		cout << "You haven't bought any movie.\n";
-		return;
+	} else {
+		int foundMovie = 0;
+		for (const auto &mov: boughtMovies) {
+			if (mov.getTitle() == movie.getTitle()) {
+				movie.increaseViewCount();
+				cout << "You are now watching " << movie.getTitle() << " in ";
+				cout << userPlan->getStreamingQuality() << " resolution.\n";
+				foundMovie = 1;
+				break;
+			}
+		}
+		if (!foundMovie) {
+			cout << "You don't own that movie.\n";
+		}
 	}
-	boughtMovie->increaseViewCount();
-	cout << "You are now watching " << boughtMovie->getTitle() << " in ";
-	cout << userPlan->getStreamingQuality() << " resolution.\n";
 }
 
 void User::addBalance(const double money) {
@@ -95,20 +112,13 @@ void User::buySubscription(Subscription &plan, string discount) {
 	}
 }
 
-User::~User() {
-	if (boughtMovie) boughtMovie = nullptr; // nu sterg obiectul de tip Movie, sterg doar asocierea lui cu User
-	if (userPlan) userPlan = nullptr; // la fel ca la boughtMovie
-}
-
 User::User(const User &cpy) {
 	balance = cpy.balance;
 	boughtMoviesCounter = cpy.boughtMoviesCounter;
 	name = cpy.name;
 	mail = cpy.mail;
 	phone = cpy.phone;
-
-	if (cpy.boughtMovie == nullptr) boughtMovie = nullptr;
-	else *boughtMovie = *cpy.boughtMovie;
+	boughtMovies = cpy.boughtMovies;
 
 	if (cpy.userPlan == nullptr) userPlan = nullptr;
 	else *userPlan = *cpy.userPlan;
@@ -120,9 +130,7 @@ User &User::operator=(const User &cpy) {
 	name = cpy.name;
 	mail = cpy.mail;
 	phone = cpy.phone;
-
-	if (cpy.boughtMovie == nullptr) boughtMovie = nullptr;
-	else *boughtMovie = *cpy.boughtMovie;
+	boughtMovies = cpy.boughtMovies;
 
 	if (cpy.userPlan == nullptr) userPlan = nullptr;
 	else *userPlan = *cpy.userPlan;
@@ -134,15 +142,9 @@ std::ostream &operator<<(ostream &os, User &user) {
 		os << "No account created.\n";
 		return os;
 	}
-	os << "You have bought " << user.boughtMoviesCounter << " movie(s): ";
-	if (user.boughtMovie) os << user.boughtMovie->getTitle();
-	else os << "-";
+	os << "You have bought over " << user.boughtMoviesCounter << " movie(s)";
 	os << ".\nBalance: $" << user.balance << ".";
 	return os;
-}
-
-void User::setBoughtMovie(Movie *boughtMovie) {
-	User::boughtMovie = boughtMovie;
 }
 
 void User::setName(string name) {
@@ -154,7 +156,7 @@ void User::setMail(string mail) {
 }
 
 void User::setPhone(string phone) {
-	for (auto x : phone) {
+	for (auto x: phone) {
 		if (!isdigit(x)) {
 			cout << "Invalid phone number.\n";
 			return;
@@ -181,6 +183,13 @@ double User::getBalance() const {
 
 string User::getName() const {
 	return name;
+}
+
+void User::checkBoughtMovies() {
+	for (const auto m : boughtMovies) {
+		cout << m.getTitle() << " ";
+	}
+	cout << endl;
 }
 
 

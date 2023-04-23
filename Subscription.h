@@ -23,11 +23,13 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, Subscription& sub);
 
 	void applyDiscount(string code);
+	void revertPriceAfterBuy();
+
 	void setSubscriptionPrice(double subscriptionPrice);
 	void setDiscountCode(string discountCode);
 	void setSubscriptionPlan(string subscriptionPlan);
 	void setStreamingQuality(string streamingQuality);
-	void revertPriceAfterBuy();
+
 	double getSubscriptionPrice() const;
 	string getDiscountCode() const;
 	string getSubscriptionPlan() const;
