@@ -5,7 +5,7 @@
   - Ierarhia Content
 - Utilizați minim doi modificatori de acces diferiți pe clasa care se moștenește (public/protected/private); alegerea vă aparține, dar trebuie să
 fie justificată în funcție de nevoile proiectului.
-  - User mosteneste public Perosn
+  - User mosteneste public Person
   - Movie mosteneste protected Content
 - Minim o clasă care să folosească moștenire multiplă (să extindă mai multe clase/interfețe).
   - SuperUser
@@ -29,7 +29,7 @@ virtuali.
   - whoAmI in Person
   - addAward in Content
   - increaseViewCount in Content
-  - TODO
+  - advertiseProduct in Subscription
  
 ### Polimorfism la executie
 - Identificați minim 4 locuri în care să aibă loc polimorfism la execuție (dynamic dispatch) în proiectul vostru (e.g. apelul unor metode virtuale prin intermediul unor pointeri/referințe către clasa de bază).
@@ -42,17 +42,32 @@ virtuali.
 ### Exceptii
 - Definiți minim un tip de excepție custom, care să extindă clasa exception
 din biblioteca standard.
-  - TODO
+  - InvalidPhoneNumber
+  - InvalidAward
+  - NegativeBalance
+  - InexistentAccount
+  - ExistingObject
 - Aruncați excepții în minim 4 funcții/metode diferite (folosiți tipuri de ex-
 cepții definite de voi sau cele din biblioteca standard).
-  - TODO
+  - functia setPhone din User
+    - invalid_argument 
+    - InvalidPhoneNumber
+  - functia addAward din Movie
+    - InvalidAward
+  - functia addBalance din User
+    - NegativeBalance
+    - InexistentAccount
+  - functia buySubscription din User
+    - NegativeBalance
+    - ExistingObject
+    - InexistentAccount
 - Implementați minim un bloc try...catch care să prindă o excepție arun-
 cată de voi (cu mențiunea explicită a tipului acesteia) și să o trateze într-un
 fel (în funcție de specificul erorii).
-  - TODO
+  - in functia setPhone din User
 - Implementați minim un bloc try...catch care să prindă o excepție, să o
 proceseze și să re-arunce un alt tip de excepție din blocul catch.
-  - TODO
+  - in functia setPhone din User
 
 ### Variabile si metode statice
 - Definiți o variabilă membru statică în cel puțin o clasă + cealalta cerinta
@@ -67,4 +82,5 @@ o moștenesc cu virtual două clase distincte, iar apoi aveți o clasă care mo�
 - Utilizarea unei lambda expresii pentru a parametriza funcționalitatea unei funcții sau a unei clase. Puteți transmite ca parametru sau reține o lambda
 expresie folosind tipul de date std::function. Se acordă punctaj parțial dacă doar folosiți lambda expresii pentru apelarea
 unor funcții care deja există în biblioteca standard (de exemplu, std::sort), fără să definiți voi o funcție/clasă care să primească un obiect de acest tip.
+  - TODO
 
