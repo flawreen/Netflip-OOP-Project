@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Movie.h"
 #include "Content.h"
+#include "InvalidAward.cpp"
 using namespace std;
 
 
@@ -30,13 +31,17 @@ Movie &Movie::operator=(const Movie &cpy) {
 	return *this;
 }
 
-Movie::~Movie() {
-	title.clear();
-	movieAwards.clear();
-}
+Movie::~Movie() = default;
 
 void Movie::addAward(string award) {
-	movieAwards.push_back(award);
+	try {
+		if (award.size() <= 3) {
+			throw InvalidAward("\'award\' must be more than 3 characters long");
+		}
+		movieAwards.push_back((award));
+	} catch (InvalidAward& e) {
+		cerr << "Invalid Award Error: " << e.what() << endl;
+	}
 }
 
 void Movie::increaseViewCount() {

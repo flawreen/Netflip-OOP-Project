@@ -9,14 +9,16 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "AdvertisableProduct.h"
+
 using namespace std;
 
-class Subscription {
-	double subscriptionPrice, discountedValue;
-	string discountCode, subscriptionPlan, streamingQuality;
+class Subscription : public AdvertisableProduct {
+	double discountedValue;
+	string discountCode, streamingQuality;
 public:
 	Subscription();
-	Subscription(string plan, string discountCode, string streamingQuality, double subscriptionPrice);
+	Subscription(string plan, string discountCode, string streamingQuality, double productPrice);
 	~Subscription();
 	Subscription(const Subscription& cpy);
 	Subscription& operator=(const Subscription& cpy);
@@ -24,15 +26,16 @@ public:
 
 	void applyDiscount(string code);
 	void revertPriceAfterBuy();
+	void advertiseProduct() override;
 
-	void setSubscriptionPrice(double subscriptionPrice);
+	void setProductPrice(double productPrice);
 	void setDiscountCode(string discountCode);
-	void setSubscriptionPlan(string subscriptionPlan);
+	void setProductName(string productName);
 	void setStreamingQuality(string streamingQuality);
 
-	double getSubscriptionPrice() const;
+	double getProductPrice() const;
 	string getDiscountCode() const;
-	string getSubscriptionPlan() const;
+	string getProductName() const;
 	string getStreamingQuality() const;
 
 };

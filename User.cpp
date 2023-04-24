@@ -3,6 +3,10 @@
 //
 
 #include <iostream>
+#include "InvalidPhoneNumber.cpp"
+#include "InexistentAccount.cpp"
+#include "NegativeBalance.cpp"
+#include "ExistingObject.cpp"
 
 using namespace std;
 
@@ -14,7 +18,6 @@ User::User(string name, string mail, string phone) : Person(name, mail, phone), 
 													 boughtMoviesCounter(0) { userPlan = new Subscription(); }
 
 User::~User() {
-	boughtMovies.clear();
 	if (userPlan) userPlan = nullptr; // la fel ca la boughtMovie
 }
 
@@ -29,7 +32,7 @@ void User::buyMovie(Movie &movie) {
 			cout << "Not enough balance.\n";
 			return;
 		} else {
-			if (userPlan->getSubscriptionPlan() == "FREE") {
+			if (userPlan->getProductName() == "FREE") {
 				balance -= movie.getMoviePrice();
 				boughtMovies.push_back(movie);
 			} else {
@@ -63,29 +66,51 @@ void User::watchMovie(Movie &movie) {
 }
 
 void User::addBalance(const double money) {
-	if (!name.empty()) {
-		balance += money;
-		cout << "New balance: " << balance << endl;
-	} else cout << "Create an account first!\n";
+	try {
+		if (name.empty() || mail.empty() || phone.empty()) {
+			throw ("Create an account first");
+		}
+		try {
+			if (money <= 0) {
+				throw ("You are trying to add a number <= 0");
+			}
+		} catch (NegativeBalance &err_bal) {
+			cerr << "Negative balance error: " << err_bal.what() << endl;
+		}
+		User::balance += money;
+	} catch (InexistentAccount &err_account) {
+		cerr << "Inexistent account error: " << err_account.what() << endl;
+	}
 }
 
 void User::buySubscription(Subscription &plan) {
-	if (name.empty()) {
-		cout << "Create an account first!\n";
-		return;
-	}
-	if (balance < plan.getSubscriptionPrice()) {
-		cout << "Not enough balance.\n";
-		return;
-	} else {
-		if (userPlan->getSubscriptionPlan() == plan.getSubscriptionPlan()) {
-			cout << "You already have this subscription.\n";
-			return;
-		} else {
-			balance -= plan.getSubscriptionPrice();
-			delete userPlan;
-			userPlan = &plan;
+	try {
+		if (name.empty() || mail.empty() || phone.empty()) {
+			throw ("Create an account first");
 		}
+
+		try {
+			if (balance < plan.getProductPrice()) {
+				throw ("Insufficient balance");
+			}
+
+			try {
+				if (userPlan->getProductName() == plan.getProductName()) {
+					throw ("You already have this subscription");
+				}
+
+				balance -= plan.getProductPrice();
+				delete userPlan;
+				userPlan = &plan;
+			} catch (ExistingObject &err_eobj) {
+				cerr << "Existing object error: " << err_eobj.what() << endl;
+			}
+		}
+		catch (NegativeBalance &err_bal) {
+			cerr << "Negative Balance Error: " << err_bal.what() << endl;
+		}
+	} catch (InexistentAccount &err_account) {
+		cerr << "Inexistent account error: " << err_account.what() << endl;
 	}
 }
 
@@ -95,16 +120,16 @@ void User::buySubscription(Subscription &plan, string discount) {
 		return;
 	}
 
-	if (balance < plan.getSubscriptionPrice()) {
+	if (balance < plan.getProductPrice()) {
 		cout << "Not enough balance.\n";
 		return;
 	} else {
-		if (userPlan->getSubscriptionPlan() == plan.getSubscriptionPlan()) {
+		if (userPlan->getProductName() == plan.getProductName()) {
 			cout << "You already have this subscription.\n";
 			return;
 		} else {
 			plan.applyDiscount(discount);
-			balance -= plan.getSubscriptionPrice();
+			balance -= plan.getProductPrice();
 			plan.revertPriceAfterBuy();
 			delete userPlan;
 			userPlan = &plan;
@@ -156,13 +181,31 @@ void User::setMail(string mail) {
 }
 
 void User::setPhone(string phone) {
-	for (auto x: phone) {
-		if (!isdigit(x)) {
-			cout << "Invalid phone number.\n";
-			return;
+	try {
+		if (phone.size() > 10) {
+			throw invalid_argument("Argument \'phone\' too long");
 		}
+	} catch (invalid_argument &err_ia) {
+		cerr << "Invalid argument exception: " << err_ia.what() << endl;
+		for (auto x: phone) {
+			if (!isdigit(x)) {
+				throw InvalidPhoneNumber("Found char in phone number");
+			}
+		}
+	} catch (InvalidPhoneNumber &e) {
+		cerr << "Error: " << e.what() << endl;
 	}
-	User::phone = phone;
+
+	try {
+		for (auto x: phone) {
+			if (!isdigit(x)) {
+				throw InvalidPhoneNumber("Found char in phone number");
+			}
+		}
+		User::phone = phone;
+	} catch (InvalidPhoneNumber &e) {
+		cerr << "Error: " << e.what() << endl;
+	}
 }
 
 void User::setUserPlan(Subscription *userPlan) {
@@ -186,7 +229,7 @@ string User::getName() const {
 }
 
 void User::checkBoughtMovies() {
-	for (const auto m : boughtMovies) {
+	for (const auto m: boughtMovies) {
 		cout << m.getTitle() << " ";
 	}
 	cout << endl;
