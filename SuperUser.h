@@ -14,7 +14,7 @@ class SuperUser : public User, public Director {
 public:
 	SuperUser()=default;
 	SuperUser(string name, string mail, string phone, string university);
-	~SuperUser();
+	~SuperUser() override;
 	void whoAmI() override;
 	void buyMovie(Movie &movie);
 	void watchMovie(Movie &movie);

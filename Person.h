@@ -12,12 +12,11 @@ using namespace std;
 class Person {
 protected:
 	string name, mail, phone;
-	virtual void whoAmI() = 0;
 public:
 	Person();
 	Person(string name, string mail, string phone);
 	virtual ~Person();
-
+	virtual void whoAmI() = 0;
 };
 
 

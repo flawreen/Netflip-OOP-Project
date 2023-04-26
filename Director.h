@@ -22,7 +22,7 @@ public:
 	Director();
 	Director(string name, string mail, string phone, string university);
 	Director(const Director& cpy);
-	virtual ~Director() override;
+	virtual ~Director();
 	Director& operator=(const Director& cpy);
 
 	void whoAmI() override;

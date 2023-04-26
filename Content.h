@@ -10,8 +10,10 @@ using namespace std;
 
 class Content {
 protected:
-	virtual void addAward(const string &award);
-	virtual void increaseViewCount();
+	virtual void contentDescription()=0;
+	virtual void increaseViewCount()=0;
+public:
+	virtual ~Content();
 };
 
 

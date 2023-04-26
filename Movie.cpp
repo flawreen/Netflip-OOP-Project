@@ -33,7 +33,7 @@ Movie &Movie::operator=(const Movie &cpy) {
 
 Movie::~Movie() = default;
 
-void Movie::addAward(string award) {
+void Movie::addAward(string &award) {
 	try {
 		if (award.size() <= 3) {
 			throw InvalidAward("\'award\' must be more than 3 characters long");
@@ -73,6 +73,13 @@ void Movie::setTitle(string title) {
 
 void Movie::setMoviePrice(double moviePrice) {
 	Movie::moviePrice = moviePrice;
+}
+
+void Movie::contentDescription() {
+	cout << "Movie title: " << title << endl;
+	cout << "Number of awards: " << movieAwards.size() << endl;
+	cout << "Number of views: " << viewCount << endl;
+	cout << "Price: " << moviePrice << endl;
 }
 
 

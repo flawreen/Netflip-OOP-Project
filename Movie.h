@@ -14,7 +14,7 @@
 using namespace std;
 
 
-class Movie : protected Content {
+class Movie : private Content {
 	string title;
 	vector<string> movieAwards;
 	int rating, viewCount;
@@ -27,7 +27,8 @@ public:
 	~Movie();
 	Movie& operator=(const Movie& cpy);
 
-	void addAward(string award);
+	void addAward(string &award);
+	void contentDescription() override;
 	void increaseViewCount() override;
 	friend std::ostream& operator<<(std::ostream& os, Movie& mov);
 	string getTitle() const;

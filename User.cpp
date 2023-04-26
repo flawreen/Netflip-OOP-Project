@@ -40,6 +40,8 @@ void User::buyMovie(Movie &movie) {
 				boughtMovies.push_back(movie);
 			}
 			++boughtMoviesCounter;
+			cout << "Movie bought: " << endl;
+			movie.contentDescription();
 		}
 	} else cout << "Create an account first!\n";
 }

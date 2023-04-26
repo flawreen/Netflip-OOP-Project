@@ -23,14 +23,16 @@ protected:
 public:
 	User();
 	User(string name, string mail, string phone);
-	virtual ~User() override;
+	virtual ~User();
 	User(const User& cpy);
 	User& operator=(const User& cpy);
 	void whoAmI() override;
 
-	void buyMovie(Movie& movie);
-	void watchMovie(Movie& movie);
-	void checkBoughtMovies();
+	virtual void buyMovie(Movie& movie);
+
+	virtual void watchMovie(Movie& movie);
+
+	virtual void checkBoughtMovies();
 	void addBalance(double money);
 	void buySubscription(Subscription& plan);
 	void buySubscription(Subscription& plan, string discount);

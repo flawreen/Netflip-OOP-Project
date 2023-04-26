@@ -8,6 +8,7 @@
 #include "User.h"
 #include "Director.h"
 #include "Movie.h"
+#include "SuperUser.h"
 
 using namespace std;
 
@@ -43,10 +44,10 @@ void createSubscription(Subscription &sub) {
 	cout << "Subscription price: ";
 	getline(cin, price, '\n');
 
-	sub.setSubscriptionPlan(name);
+	sub.setProductName(name);
 	sub.setDiscountCode(code);
 	sub.setStreamingQuality(quality);
-	sub.setSubscriptionPrice(stod(price));
+	sub.setProductPrice(stod(price));
 }
 
 void createMovie(Movie &mov) {
@@ -65,24 +66,41 @@ void createMovie(Movie &mov) {
 }
 
 int main() {
-	Subscription free;
-	Subscription premium("Premium", "nflip112", "4K", 199.89);
-	User u1;
-	User u2("Mircea", "mircea.boss@hotmail.com", "0712233456");
-	Movie m1("Matrix", 199.99);
-	Director d1("Promania", "costin.boss@hotmail.uk", "07maiincearca", "Scoala vietii");
-	d1.addMovie(m1);
-	u2.addBalance(99999.99);
-	u2.buySubscription(premium);
-	u2.buyMovie(m1);
-	u2.checkBoughtMovies();
-//	Director d2;
-//	Director d1("Quentin Bambino", "La furat", "A fost odata ca niciodata in Balotexas", 14.55,
-//				"Club99 - aproape micutzu");
-//	Movie *Matrix = new Movie("Matrix", 120.33, "Golden Globe");
-//	u2.addBalance(999.99);
+//	Subscription free;
+//	Subscription premium("Premium", "nflip112", "4K", 199.89);
+//	User u1;
+//	User u2("Mircea", "mircea.boss@hotmail.com", "0712233456");
+//	Movie m1("Matrix", 199.99);
+//	Director d1("Promania", "costin.boss@hotmail.uk", "07maiincearca", "Scoala vietii");
+//	d1.addMovie(m1);
+//	u2.addBalance(99999.99);
 //	u2.buySubscription(premium);
-//	u2.buyMovie(*Matrix);
+//	u2.buyMovie(m1);
+//	u2.checkBoughtMovies();
+
+	Person* user = new User("Mircea", "mircea.boss@hotmail.com", "0712233456");
+	Person* director = new Director("Promania", "costin.boss@hotmail.uk", "07maiincearca", "Scoala vietii");
+	User* superuser = new SuperUser("Lenghel", "imiplacesamananc@hotmail.uk", "07maiincearca", "Dristor Oradea");
+	AdvertisableProduct* subscription = new Subscription("Premium", "nflip112", "4K", 199.89);
+	user->whoAmI();
+	cout << endl;
+	director->whoAmI();
+	cout << endl;
+	superuser->checkBoughtMovies();
+	cout << endl;
+	subscription->advertiseProduct();
+	cout << endl;
+
+	AdvertisableProduct* abonament = new Subscription();
+	Subscription* free = dynamic_cast<Subscription*>(abonament); // am realizat downcastingul
+	free->advertiseProduct();
+
+
+
+	delete user;
+	delete director;
+	delete superuser;
+	delete subscription;
 
 //	char option;
 //	User user;

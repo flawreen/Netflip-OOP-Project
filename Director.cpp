@@ -54,7 +54,7 @@ int Director::getMovieCount() {
 
 void Director::whoAmI() {
 	cout << "I am a movie director. No I'm not Quentin Tarantino.";
-	cout << "My name is " << name << ". Call me if ready for business: " << phone << ".\n";
+	cout << " My name is " << name << ". Call me if ready for business: " << phone << ".\n";
 }
 
 

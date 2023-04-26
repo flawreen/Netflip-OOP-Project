@@ -21,7 +21,6 @@ SuperUser::SuperUser(string nume, string maill, string phonee, string universiti
 }
 
 SuperUser::~SuperUser() {
-	delete &god;
 }
 
 void SuperUser::buyMovie(Movie &movie) {
