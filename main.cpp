@@ -78,9 +78,16 @@ int main() {
 //	u2.buyMovie(m1);
 //	u2.checkBoughtMovies();
 
+	vector<Person*> vperson;
+	vector<User*> vuser;
+	vector<Director*> vdirector;
+	vector<SuperUser*> vsuperuser;
 	Person* user = new User("Mircea", "mircea.boss@hotmail.com", "0712233456");
 	Person* director = new Director("Promania", "costin.boss@hotmail.uk", "07maiincearca", "Scoala vietii");
+	vperson.push_back(user);
+	vperson.push_back(director);
 	User* superuser = new SuperUser("Lenghel", "imiplacesamananc@hotmail.uk", "07maiincearca", "Dristor Oradea");
+	vperson.push_back(superuser);
 	AdvertisableProduct* subscription = new Subscription("Premium", "nflip112", "4K", 199.89);
 	user->whoAmI();
 	cout << endl;
@@ -95,7 +102,20 @@ int main() {
 	Subscription* free = dynamic_cast<Subscription*>(abonament); // am realizat downcastingul
 	free->advertiseProduct();
 
+	for (auto p : vperson) {
+		if (dynamic_cast<User*>(p) != nullptr) {
+			vuser.push_back(dynamic_cast<User*>(p));
+		} else if (dynamic_cast<Director*>(p)) {
+			vdirector.push_back(dynamic_cast<Director*>(p));
+		}
+		if (dynamic_cast<SuperUser*>(p)) {
+			vsuperuser.push_back(dynamic_cast<SuperUser*>(p));
+		}
+	}
 
+	cout << "On our platform there are " << vperson.size() << " people of which:\n";
+	cout << vuser.size() << " are users.\n";
+	cout << vdirector.size() << " are directors.\n";
 
 	delete user;
 	delete director;
