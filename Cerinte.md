@@ -43,10 +43,8 @@ virtuali.
  
 ### Polimorfism la executie
 - Identificați minim 4 locuri în care să aibă loc polimorfism la execuție (dynamic dispatch) în proiectul vostru (e.g. apelul unor metode virtuale prin intermediul unor pointeri/referințe către clasa de bază).
-  - Person -> User -> whoAmI()
-  - Person -> Director -> whoAmI()
-  - User -> SuperUser -> checkBoughtMovies()
-  - AdvertisableProduct -> Subscription -> advertiseProduct()
+  - whoAmI() in main pentru 3 instante de upcasting Person
+  - advertiseProduct() pentru o instanta de upcasting AdvertisableProduct
   - toate in main
 
 - Identificați minim 4 instanțe de upcasting în codul vostru (e.g. atribuirea unor obiecte de tipul unor clase moștenite la pointeri/referințe către clasa de bază).
@@ -57,7 +55,7 @@ virtuali.
   - toate in main
 
 - Realizarea downcasting-ului în cel puțin o situație în codul vostru (unde are sens), folosind dynamic_cast sau RTTI.
-  - in main AdvertisableProduct -> Subscription
+  - la statistica pentru persoanele din platforma
 
 ### Exceptii
 - Definiți minim un tip de excepție custom, care să extindă clasa exception
