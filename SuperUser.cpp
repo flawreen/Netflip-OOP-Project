@@ -23,13 +23,13 @@ SuperUser::SuperUser(string nume, string maill, string phonee, string universiti
 SuperUser::~SuperUser() {
 }
 
-void SuperUser::buyMovie(Movie &movie) {
+void SuperUser::buyMovie(Movie* movie) {
 	cout << "Super users have access to all movies.\n";
 }
 
-void SuperUser::watchMovie(Movie &movie) {
-	movie.increaseViewCount();
-	cout << "You are now watching " << movie.getTitle() << " in ";
+void SuperUser::watchMovie(Movie* movie) {
+	movie->increaseViewCount();
+	cout << "You are now watching " << movie->getTitle() << " in ";
 	cout << userPlan->getStreamingQuality() << " resolution.\n";
 }
 

@@ -28,10 +28,8 @@ public:
 	User& operator=(const User& cpy);
 	void whoAmI() override;
 
-	virtual void buyMovie(Movie& movie);
-
-	virtual void watchMovie(Movie& movie);
-
+	virtual void buyMovie(Movie* movie);
+	virtual void watchMovie(Movie* movie);
 	virtual void checkBoughtMovies();
 	void addBalance(double money);
 	void buySubscription(Subscription& plan);

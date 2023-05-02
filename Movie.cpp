@@ -6,6 +6,8 @@
 #include "Movie.h"
 #include "Content.h"
 #include "InvalidAward.cpp"
+#include "NaN.cpp"
+
 using namespace std;
 
 
@@ -34,14 +36,30 @@ Movie &Movie::operator=(const Movie &cpy) {
 Movie::~Movie() = default;
 
 void Movie::addAward(string &award) {
-	try {
-		if (award.size() <= 3) {
-			throw InvalidAward("\'award\' must be more than 3 characters long");
+	while (true) {
+		try {
+			if (award.size() <= 3) {
+				throw InvalidAward("\'award\' must be more than 3 characters long");
+			}
+			movieAwards.push_back(award);
+			break;
+		} catch (InvalidAward &e) {
+			cerr << "Invalid Award Error: " << e.what() << ". Add a year to the award title: " << endl;
+			string year;
+			cin >> year;
+			try {
+				for (auto s: year) {
+					if (!isdigit(s)) throw NaN("Not a number.");
+				}
+			} catch (const NaN& err) {
+				cerr << "NaN error: " << err.what() << endl;
+				continue;
+			}
+			award.push_back(' ');
+			award.append(year);
 		}
-		movieAwards.push_back((award));
-	} catch (InvalidAward& e) {
-		cerr << "Invalid Award Error: " << e.what() << endl;
 	}
+
 }
 
 void Movie::increaseViewCount() {

@@ -10,10 +10,10 @@ using namespace std;
 
 class Content {
 protected:
-	virtual void contentDescription()=0;
 	virtual void increaseViewCount()=0;
 public:
 	virtual ~Content();
+	virtual void contentDescription()=0;
 };
 
 

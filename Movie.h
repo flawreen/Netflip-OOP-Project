@@ -14,7 +14,7 @@
 using namespace std;
 
 
-class Movie : private Content {
+class Movie : public Content {
 	string title;
 	vector<string> movieAwards;
 	int rating, viewCount;
