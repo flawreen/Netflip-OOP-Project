@@ -36,10 +36,13 @@ alocat dinamic de tipul unei clase moștenitoare, la care să vă referiți prin
 - Definiți cel puțin 4 metode virtuale care să fie suprascrise în clasele moștenitoare. Pot fi pur virtuale sau cu o implementare implicită. 
 Se iau în considerare și metodele definite la celelalte subpuncte, exceptând destructorii
 virtuali.
-  - whoAmI in Person
-  - contentDescription in Content
-  - increaseViewCount in Content
-  - advertiseProduct in Subscription
+  - clasa Person
+    - whoAmI()
+  - clasa AdvertisableProduct
+    - advertiseProduct()
+  - clasa Content
+    - contentDescription()
+    - increaseViewCount()
  
 ### Polimorfism la executie
 - Identificați minim 4 locuri în care să aibă loc polimorfism la execuție (dynamic dispatch) în proiectul vostru (e.g. apelul unor metode virtuale prin intermediul unor pointeri/referințe către clasa de bază).
