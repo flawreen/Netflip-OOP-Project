@@ -31,7 +31,7 @@ metode (alternativ: minim două interfețe, fiecare cu cel puțin o metodă).
 
 - Trebuie să aveți / să identificați în proiect cel puțin o situație în care să fie nevoie de și să se apeleze destructorul virtual (i.e. să ștergeți un obiect
 alocat dinamic de tipul unei clase moștenitoare, la care să vă referiți prin intermediul unui pointer la clasa de bază).
-  - in main am sters cele 4 instante de upcasting
+  - in main am functia template freeVector care elibereaza memoria ocupata de vectori de pointeri la clase de baza
 
 - Definiți cel puțin 4 metode virtuale care să fie suprascrise în clasele moștenitoare. Pot fi pur virtuale sau cu o implementare implicită. 
 Se iau în considerare și metodele definite la celelalte subpuncte, exceptând destructorii
