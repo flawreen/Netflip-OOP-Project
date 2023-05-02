@@ -9,7 +9,7 @@
 fie justificată în funcție de nevoile proiectului.
   - User si Director mostenesc public si virtual Person
   - SuperUser mosteneste public User si Director
-  - Movie mosteneste protected Content
+  - Movie mosteneste public Content
   - Subscription mosteneste public AdvertisableProduct
 
 - Minim o clasă care să folosească moștenire multiplă (să extindă mai multe clase/interfețe).
