@@ -19,7 +19,8 @@ fie justificată în funcție de nevoile proiectului.
   - In constructorul parametrizat al clasei User
 
 - Minim două date membru și minim o metodă care să aibă modificatorul de acces protected (în mod util, să fie accesate/apelate dintr-o clasă care le moștenește).
-  - Clasa Person (3 date membru si o metoda), accesate in subclasa User
+  - Clasa Person 3 date membru, accesate in subclasa User
+  - Clasa Content, o metoda protected
 
 ### Interfete si metode virtuale
 - Definiți și extindeți (moșteniți) minim o interfață (clasă fără date membru, doar metode pur virtuale și un destructor virtual) care să aibă minim două
@@ -46,19 +47,18 @@ virtuali.
  
 ### Polimorfism la executie
 - Identificați minim 4 locuri în care să aibă loc polimorfism la execuție (dynamic dispatch) în proiectul vostru (e.g. apelul unor metode virtuale prin intermediul unor pointeri/referințe către clasa de bază).
-  - whoAmI() in main pentru 3 instante de upcasting Person
-  - advertiseProduct() pentru o instanta de upcasting AdvertisableProduct
-  - toate in main
+  - for dupa clasa Person cu functia whoAmI()
+  - for dupa clasa AdvertisableProduct cu functia advertiseProduct()
+  - for dupa clasa Content cu functiile contentDescription() si watchMovie()
 
 - Identificați minim 4 instanțe de upcasting în codul vostru (e.g. atribuirea unor obiecte de tipul unor clase moștenite la pointeri/referințe către clasa de bază).
   - Person -> User
   - Person -> Director
-  - User -> SuperUser
   - AdvertisableProduct -> Subscription
-  - toate in main
+  - Content -> Movie
 
 - Realizarea downcasting-ului în cel puțin o situație în codul vostru (unde are sens), folosind dynamic_cast sau RTTI.
-  - la statistica pentru persoanele din platforma
+  - in for-ul dupa Person in main
 
 ### Exceptii
 - Definiți minim un tip de excepție custom, care să extindă clasa exception
@@ -87,11 +87,12 @@ cepții definite de voi sau cele din biblioteca standard).
 - Implementați minim un bloc try...catch care să prindă o excepție arun-
 cată de voi (cu mențiunea explicită a tipului acesteia) și să o trateze într-un
 fel (în funcție de specificul erorii).
-  - in functia setPhone din User
+  - in functia addAward din Movie
 
 - Implementați minim un bloc try...catch care să prindă o excepție, să o
 proceseze și să re-arunce un alt tip de excepție din blocul catch.
   - in functia setPhone din User
+  - in functia addAward din Movie
 
 ### Variabile si metode statice
 
