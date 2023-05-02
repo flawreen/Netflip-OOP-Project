@@ -76,6 +76,7 @@ cepții definite de voi sau cele din biblioteca standard).
     - InvalidPhoneNumber
   - functia addAward din Movie
     - InvalidAward
+    - NaN
   - functia addBalance din User
     - NegativeBalance
     - InexistentAccount
@@ -91,7 +92,6 @@ fel (în funcție de specificul erorii).
 
 - Implementați minim un bloc try...catch care să prindă o excepție, să o
 proceseze și să re-arunce un alt tip de excepție din blocul catch.
-  - in functia setPhone din User
   - in functia addAward din Movie
 
 ### Variabile si metode statice
