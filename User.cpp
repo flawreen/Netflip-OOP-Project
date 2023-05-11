@@ -3,72 +3,115 @@
 //
 
 #include <iostream>
-#include <cstring>
+#include "InvalidPhoneNumber.cpp"
+#include "InexistentAccount.cpp"
+#include "NegativeBalance.cpp"
+#include "ExistingObject.cpp"
+
 using namespace std;
+
 #include "User.h"
 
-User::User() : name(""), mail(""), phone(""), userPlan(nullptr),
-				balance(0.0), boughtMoviesCounter(0), boughtMovie(nullptr) {}
+User::User() : Person(), userPlan(nullptr), balance(0.0), boughtMoviesCounter(0) {}
 
-User::User(string name, string mail, string phone) :
-				name(name), mail(mail), boughtMovie(nullptr),
-				phone(phone), balance(0.0), boughtMoviesCounter(0)
-	{userPlan = new Subscription();}
+User::User(string name, string mail, string phone) : Person(name, mail, phone), balance(0.0),
+													 boughtMoviesCounter(0) { userPlan = new Subscription(); }
 
-void User::buyMovie(Movie& movie) {
-	if (boughtMovie != nullptr) {
-		cout << "You can't buy another movie!\n";
-	} else if (!name.empty()) {
-		if (balance < movie.getMoviePrice()) {
+User::~User() {
+	if (userPlan) userPlan = nullptr; // la fel ca la boughtMovie
+}
+
+void User::whoAmI() {
+	cout << "My name is " << name << "! You can contact me at any time by phone at " << phone;
+	cout << " or you can send me a mail at " << mail << "!\n";
+}
+
+void User::buyMovie(Movie *movie) {
+	if (!name.empty()) {
+		if (balance < movie->getMoviePrice()) {
 			cout << "Not enough balance.\n";
 			return;
 		} else {
-			if (userPlan->getSubscriptionPlan() == "FREE") {
-				balance -= movie.getMoviePrice();
+			if (userPlan->getProductName() == "FREE") {
+				balance -= movie->getMoviePrice();
+				boughtMovies.push_back(*movie);
+			} else {
+				// Daca nu are abonamentul gratis atunci nu mai plateste pentru filme
+				boughtMovies.push_back(*movie);
 			}
 			++boughtMoviesCounter;
-			boughtMovie = &movie;
+			cout << "Movie bought: " << endl;
+			movie->contentDescription();
 		}
 	} else cout << "Create an account first!\n";
 }
 
-void User::watchMovie() {
+void User::watchMovie(Movie *movie) {
 	if (name.empty()) {
 		cout << "Create an account first!\n";
 		return;
-	} else if (boughtMovie == nullptr) {
-		cout << "You haven't bought any movie.\n";
-		return;
+	} else {
+		int foundMovie = 0;
+		for (const auto &mov: boughtMovies) {
+			if (mov.getTitle() == movie->getTitle()) {
+				movie->increaseViewCount();
+				cout << "You are now watching " << movie->getTitle() << " in ";
+				cout << userPlan->getStreamingQuality() << " resolution.\n";
+				foundMovie = 1;
+				break;
+			}
+		}
+		if (!foundMovie) {
+			cout << "You don't own that movie.\n";
+		}
 	}
-	boughtMovie->increaseViewCount();
-	cout << "You are now watching " << boughtMovie->getTitle() << " in ";
-	cout << userPlan->getStreamingQuality() << " resolution.\n";
 }
 
 void User::addBalance(const double money) {
-	if (!name.empty()) {
-		balance += money;
-		cout << "New balance: " << balance << endl;
-	} else cout << "Create an account first!\n";
+	try {
+		if (name.empty() || mail.empty() || phone.empty()) {
+			throw InexistentAccount("Create an account first");
+		}
+		try {
+			if (money <= 0) {
+				throw NegativeBalance("You are trying to add a number <= 0");
+			}
+		} catch (const NegativeBalance &err_bal) {
+			cerr << "Negative balance error: " << err_bal.what() << endl;
+		}
+		User::balance += money;
+	} catch (const InexistentAccount &err_account) {
+		cerr << "Inexistent account error: " << err_account.what() << endl;
+	}
 }
 
 void User::buySubscription(Subscription &plan) {
-	if (name.empty()) {
-		cout << "Create an account first!\n";
-		return;
-	}
-	if (balance < plan.getSubscriptionPrice()) {
-		cout << "Not enough balance.\n";
-		return;
-	} else {
-		if (userPlan->getSubscriptionPlan() == plan.getSubscriptionPlan()) {
-			cout << "You already have this subscription.\n";
-			return;
-		} else {
-			balance -= plan.getSubscriptionPrice();
-			delete userPlan;
-			userPlan = &plan;
+	try {
+		if (name.empty() || mail.empty() || phone.empty()) {
+			throw InexistentAccount("Create an account first");
 		}
+		try {
+			if (balance < plan.getProductPrice()) {
+				throw NegativeBalance("Insufficient balance");
+			}
+
+			try {
+				if (userPlan->getProductName() == plan.getProductName()) {
+					throw ExistingObject("You already have this subscription");
+				}
+
+				balance -= plan.getProductPrice();
+				delete userPlan;
+				userPlan = &plan;
+			} catch (ExistingObject &err_eobj) {
+				cerr << "Existing object error: " << err_eobj.what() << endl;
+			}
+		}
+		catch (NegativeBalance &err_bal) {
+			cerr << "Negative Balance Error: " << err_bal.what() << endl;
+		}
+	} catch (InexistentAccount &err_account) {
+		cerr << "Inexistent account error: " << err_account.what() << endl;
 	}
 }
 
@@ -78,26 +121,21 @@ void User::buySubscription(Subscription &plan, string discount) {
 		return;
 	}
 
-	if (balance < plan.getSubscriptionPrice()) {
+	if (balance < plan.getProductPrice()) {
 		cout << "Not enough balance.\n";
 		return;
 	} else {
-		if (userPlan->getSubscriptionPlan() == plan.getSubscriptionPlan()) {
+		if (userPlan->getProductName() == plan.getProductName()) {
 			cout << "You already have this subscription.\n";
 			return;
 		} else {
 			plan.applyDiscount(discount);
-			balance -= plan.getSubscriptionPrice();
+			balance -= plan.getProductPrice();
 			plan.revertPriceAfterBuy();
 			delete userPlan;
 			userPlan = &plan;
 		}
 	}
-}
-
-User::~User() {
-	if (boughtMovie) boughtMovie = nullptr; // nu sterg obiectul de tip Movie, sterg doar asocierea lui cu User
-	if (userPlan) userPlan = nullptr; // la fel ca la boughtMovie
 }
 
 User::User(const User &cpy) {
@@ -106,9 +144,7 @@ User::User(const User &cpy) {
 	name = cpy.name;
 	mail = cpy.mail;
 	phone = cpy.phone;
-
-	if (cpy.boughtMovie == nullptr) boughtMovie = nullptr;
-	else *boughtMovie = *cpy.boughtMovie;
+	boughtMovies = cpy.boughtMovies;
 
 	if (cpy.userPlan == nullptr) userPlan = nullptr;
 	else *userPlan = *cpy.userPlan;
@@ -120,9 +156,7 @@ User &User::operator=(const User &cpy) {
 	name = cpy.name;
 	mail = cpy.mail;
 	phone = cpy.phone;
-
-	if (cpy.boughtMovie == nullptr) boughtMovie = nullptr;
-	else *boughtMovie = *cpy.boughtMovie;
+	boughtMovies = cpy.boughtMovies;
 
 	if (cpy.userPlan == nullptr) userPlan = nullptr;
 	else *userPlan = *cpy.userPlan;
@@ -134,15 +168,9 @@ std::ostream &operator<<(ostream &os, User &user) {
 		os << "No account created.\n";
 		return os;
 	}
-	os << "You have bought " << user.boughtMoviesCounter << " movie(s): ";
-	if (user.boughtMovie) os << user.boughtMovie->getTitle();
-	else os << "-";
+	os << "You have bought over " << user.boughtMoviesCounter << " movie(s)";
 	os << ".\nBalance: $" << user.balance << ".";
 	return os;
-}
-
-void User::setBoughtMovie(Movie *boughtMovie) {
-	User::boughtMovie = boughtMovie;
 }
 
 void User::setName(string name) {
@@ -154,13 +182,36 @@ void User::setMail(string mail) {
 }
 
 void User::setPhone(string phone) {
-	for (auto x : phone) {
-		if (!isdigit(x)) {
-			cout << "Invalid phone number.\n";
+	try {
+		if (phone.size() > 10) {
+			throw invalid_argument("Argument \'phone\' too long");
+		}
+		try {
+			for (auto x: phone) {
+				if (!isdigit(x)) {
+					throw InvalidPhoneNumber("Found char in phone number");
+				}
+			}
+		} catch (InvalidPhoneNumber &e) {
+			cerr << "Error: " << e.what() << endl;
 			return;
 		}
+		User::phone = phone;
+	} catch (invalid_argument &err_ia) {
+		cerr << "Invalid argument exception: " << err_ia.what() << endl;
+
 	}
-	User::phone = phone;
+
+//	try {
+//		for (auto x: phone) {
+//			if (!isdigit(x)) {
+//				throw InvalidPhoneNumber("Found char in phone number");
+//			}
+//		}
+//		User::phone = phone;
+//	} catch (InvalidPhoneNumber &e) {
+//		cerr << "Error: " << e.what() << endl;
+//	}
 }
 
 void User::setUserPlan(Subscription *userPlan) {
@@ -181,6 +232,13 @@ double User::getBalance() const {
 
 string User::getName() const {
 	return name;
+}
+
+void User::checkBoughtMovies() {
+	for (const auto m: boughtMovies) {
+		cout << m.getTitle() << " ";
+	}
+	cout << endl;
 }
 
 

@@ -9,28 +9,33 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "AdvertisableProduct.h"
+
 using namespace std;
 
-class Subscription {
-	double subscriptionPrice, discountedValue;
-	string discountCode, subscriptionPlan, streamingQuality;
+class Subscription : public AdvertisableProduct {
+	double discountedValue;
+	string discountCode, streamingQuality;
 public:
 	Subscription();
-	Subscription(string plan, string discountCode, string streamingQuality, double subscriptionPrice);
+	Subscription(string plan, string discountCode, string streamingQuality, double productPrice);
 	~Subscription();
 	Subscription(const Subscription& cpy);
 	Subscription& operator=(const Subscription& cpy);
 	friend std::ostream& operator<<(std::ostream& os, Subscription& sub);
 
 	void applyDiscount(string code);
-	void setSubscriptionPrice(double subscriptionPrice);
-	void setDiscountCode(string discountCode);
-	void setSubscriptionPlan(string subscriptionPlan);
-	void setStreamingQuality(string streamingQuality);
 	void revertPriceAfterBuy();
-	double getSubscriptionPrice() const;
+	void advertiseProduct() override;
+
+	void setProductPrice(double productPrice);
+	void setDiscountCode(string discountCode);
+	void setProductName(string productName);
+	void setStreamingQuality(string streamingQuality);
+
+	double getProductPrice() const;
 	string getDiscountCode() const;
-	string getSubscriptionPlan() const;
+	string getProductName() const;
 	string getStreamingQuality() const;
 
 };
