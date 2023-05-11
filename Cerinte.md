@@ -24,7 +24,8 @@ tate de voi.
   - vector, string
 - Utilizarea a minim două funcții utilitare diferite din biblioteca standard
 (funcții libere, nu metode) - [biblioteca algorithm](https://cplusplus.com/reference/algorithm/)
-  - TODO
+  - move la constructori
+  - random_shuffle pe un string ca sa fac un user id
 
 #### Smart pointers
 - Utilizați în mod corespunzător minim două tipuri diferite de smart pointers din
@@ -50,4 +51,4 @@ dintre:
     – thread: execuție paralelă a codului.
 Pentru a fi punctați, trebuie să instanțiați și să utilizați cel puțin câteva tipuri
 de date din biblioteca aleasă
-  - TODO
+  - Am afisat cand a fost apelat un constructor de tip User
