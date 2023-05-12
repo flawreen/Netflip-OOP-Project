@@ -18,7 +18,8 @@ funcția șablon (nu neapărat pentru ambele)
 - Identificați minim 2 object-oriented design patterns diferite în clasele implemen-
 tate de voi.
   - cred ca am un Decorator cand instantiez Subscription in User sau Movie in Director
-  
+  - si un template method la clasele abstracte
+
 #### Biblioteca standard 
 - Utilizarea a minim două tipuri de date container diferite din STL
   - vector, string
