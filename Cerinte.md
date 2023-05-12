@@ -17,7 +17,7 @@ funcția șablon (nu neapărat pentru ambele)
 #### Design patterns
 - Identificați minim 2 object-oriented design patterns diferite în clasele implemen-
 tate de voi.
-  - TODO
+  - cred ca am un Decorator cand instantiez Subscription in User sau Movie in Director
   
 #### Biblioteca standard 
 - Utilizarea a minim două tipuri de date container diferite din STL
