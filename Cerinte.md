@@ -12,7 +12,7 @@ cel puțin un tip de date generic (cel puțin un typename), care să fie folosit
   - freeVector
 - Definiți cel puțin o implementare specializată pentru clasa șablon sau
 funcția șablon (nu neapărat pentru ambele)
-  - fac o functie care face downcasting, si o specializez sa faca downcasting pt mosteniri in diamant
+  - fac o functie care face downcasting, si o specializez sa faca downcasting pt mostenirea diamant superuser
 
 #### Design patterns
 - Identificați minim 2 object-oriented design patterns diferite în clasele implemen-
@@ -34,7 +34,8 @@ Prin smart pointer ne referim la una dintre clasele std::reference_wrapper3,
 std::unique_ptr, std::shared_ptr sau std::weak_ptr.
 Puteți să folosiți aceste clase în locul referințelor sau pointerilor obișnuiți din codul
 vostru.
-  - TODO
+  - reference_wrapper in clasa superuser pentru subscription
+  - shared_ptr si/sau unique_ptr pentru pointerii din user
 
 #### Bonus
 Fiecare cerință bonus valorează 1 punct.
