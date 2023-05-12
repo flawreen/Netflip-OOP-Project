@@ -4,7 +4,7 @@
 parametrizată de cel puțin un tip de date generic (cel puțin un typename),
 care să fie folosit în mod util în interiorul clasei (e.g. pentru a defini un
 atribut, o metodă etc.).
-  - TODO
+  - clasa ClassHolder
 - Definiți și apelați minim o funcție șablon (poate fi funcție liberă sau metodă
 a unei clase care nu este neapărat generică). Trebuie să fie parametrizată de
 cel puțin un tip de date generic (cel puțin un typename), care să fie folosit
@@ -12,7 +12,7 @@ cel puțin un tip de date generic (cel puțin un typename), care să fie folosit
   - freeVector
 - Definiți cel puțin o implementare specializată pentru clasa șablon sau
 funcția șablon (nu neapărat pentru ambele)
-  - fac o functie care face downcasting, si o specializez sa faca downcasting pt mostenirea diamant superuser
+  - specializarea ClassHolder<Director>
 
 #### Design patterns
 - Identificați minim 2 object-oriented design patterns diferite în clasele implemen-
@@ -43,7 +43,7 @@ Fiecare cerință bonus valorează 1 punct.
 - Utilizarea modificatorului const în mod corect, peste tot unde este po-
 sibil și are sens în program (pe date membre, pe metode, la transmiterea
 parametrilor prin referință etc.).
-  - TODO  
+  
 - Folosirea unei biblioteci utilitare din biblioteca standard, în afară de cele cu
 care am lucrat la laborator. Puteți alege (în funcție de specificul proiectului)
 dintre:
