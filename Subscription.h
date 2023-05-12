@@ -24,9 +24,9 @@ public:
 	Subscription& operator=(const Subscription& cpy);
 	friend std::ostream& operator<<(std::ostream& os, Subscription& sub);
 
-	void applyDiscount(string code);
+	void applyDiscount(const string& code);
 	void revertPriceAfterBuy();
-	void advertiseProduct() override;
+	void advertiseProduct() const override;
 
 	void setProductPrice(double productPrice);
 	void setDiscountCode(string discountCode);

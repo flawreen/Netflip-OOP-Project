@@ -22,14 +22,14 @@ class Movie : public Content {
 public:
 	Movie();  // Default constructor
 	Movie(string title, double price);
-	Movie(string title, double price, string award);
+	Movie(string title, double price, const string& award);
 	Movie(const Movie &cpy);
 	~Movie();
 	Movie& operator=(const Movie& cpy);
 
 	void addAward(string &award);
-	void contentDescription() override;
-	void increaseViewCount() override;
+	void contentDescription() const override;
+	void increaseViewCount() override ;
 	friend std::ostream& operator<<(std::ostream& os, Movie& mov);
 	string getTitle() const;
 	double getMoviePrice() const;

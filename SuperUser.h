@@ -15,10 +15,10 @@ public:
 	SuperUser()=default;
 	SuperUser(string name, string mail, string phone, string university);
 	~SuperUser() override;
-	void whoAmI() override;
-	void buyMovie(Movie* movie);
-	void watchMovie(Movie* movie);
-	void checkBoughtMovies();
+	void whoAmI() const override;
+	void buyMovie(const Movie* movie) const;
+	void watchMovie(Movie* movie) const;
+	void checkBoughtMovies() const override;
 
 };
 

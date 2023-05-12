@@ -16,7 +16,7 @@ public:
 	Person();
 	Person(string name, string mail, string phone);
 	virtual ~Person();
-	virtual void whoAmI() = 0;
+	virtual void whoAmI() const = 0;
 };
 
 

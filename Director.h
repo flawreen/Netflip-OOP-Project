@@ -25,7 +25,7 @@ public:
 	virtual ~Director();
 	Director& operator=(const Director& cpy);
 
-	void whoAmI() override;
+	void whoAmI() const override;
 	void addMovie(Movie &movie);
 	static void increaseMovieCount();
 	static int getMovieCount();

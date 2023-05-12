@@ -4,6 +4,7 @@
 
 #include "Subscription.h"
 #include <iostream>
+#include <utility>
 
 using namespace std;
 
@@ -12,11 +13,11 @@ Subscription::Subscription() : AdvertisableProduct("Free Netflip Subscription", 
 							   discountCode(""),
 							   streamingQuality("Full HD") {}
 
-Subscription::Subscription(string plan, string discountCode, string streamingQuality, double productPrice) :
-		AdvertisableProduct(plan, productPrice),
+Subscription::Subscription(string plan, string discountCode, string streamingQuality, const double productPrice) :
+		AdvertisableProduct(std::move(plan), productPrice),
 		discountedValue(0.0),
-		discountCode(discountCode),
-		streamingQuality(streamingQuality) {}
+		discountCode(std::move(discountCode)),
+		streamingQuality(std::move(streamingQuality)) {}
 
 Subscription::Subscription(const Subscription &cpy) {
 	productPrice = cpy.productPrice;
@@ -35,7 +36,7 @@ Subscription &Subscription::operator=(const Subscription &cpy) {
 	return *this;
 }
 
-void Subscription::applyDiscount(string code) {
+void Subscription::applyDiscount(const string &code) {
 	if (productPrice <= 0.0) {
 		cout << "You can't apply a discount code for this subscription!\n";
 	} else if (code == discountCode) {
@@ -81,23 +82,23 @@ std::ostream &operator<<(ostream &os, Subscription &sub) {
 	return os;
 }
 
-void Subscription::setProductPrice(double productPrice) {
+void Subscription::setProductPrice(const double productPrice) {
 	Subscription::productPrice = productPrice;
 }
 
 void Subscription::setDiscountCode(string discountCode) {
-	Subscription::discountCode = discountCode;
+	Subscription::discountCode = std::move(discountCode);
 }
 
 void Subscription::setProductName(string productName) {
-	Subscription::productName = productName;
+	Subscription::productName = std::move(productName);
 }
 
 void Subscription::setStreamingQuality(string streamingQuality) {
-	Subscription::streamingQuality = streamingQuality;
+	Subscription::streamingQuality = std::move(streamingQuality);
 }
 
-void Subscription::advertiseProduct() {
+void Subscription::advertiseProduct() const {
 	cout << "============================================================\n";
 	cout << "You can now buy our new Netflip subscription, " << productName << "!\n";
 	cout << "For only " << productPrice << " you can stream our movies in " << streamingQuality << "!\n";

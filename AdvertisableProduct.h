@@ -16,7 +16,7 @@ public:
 	AdvertisableProduct()=default;
 	AdvertisableProduct(string name, double price);
 	virtual ~AdvertisableProduct();
-	virtual void advertiseProduct();
+	virtual void advertiseProduct() const;
 };
 
 

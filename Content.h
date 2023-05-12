@@ -13,7 +13,7 @@ protected:
 	virtual void increaseViewCount()=0;
 public:
 	virtual ~Content();
-	virtual void contentDescription()=0;
+	virtual void contentDescription() const = 0;
 };
 
 

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <utility>
 #include "InvalidPhoneNumber.cpp"
 #include "InexistentAccount.cpp"
 #include "NegativeBalance.cpp"
@@ -12,21 +13,24 @@ using namespace std;
 
 #include "User.h"
 
-User::User() : Person(), userPlan(nullptr), balance(0.0), boughtMoviesCounter(0) {}
+User::User() : Person(), userPlan(nullptr), balance(0.0), boughtMoviesCounter(0), time_created(chrono::system_clock::to_time_t(chrono::system_clock::now())) {}
 
-User::User(string name, string mail, string phone) : Person(name, mail, phone), balance(0.0),
-													 boughtMoviesCounter(0) { userPlan = new Subscription(); }
+User::User(const string &name, string mail, string phone) : Person(name, std::move(mail), std::move(phone)), balance(0.0), boughtMoviesCounter(0), time_created(chrono::system_clock::to_time_t(chrono::system_clock::now())) {
+	userPlan = new Subscription();
+	user_id = "123456789";
+	std::random_shuffle(user_id.begin(), user_id.end());
+}
 
 User::~User() {
 	if (userPlan) userPlan = nullptr; // la fel ca la boughtMovie
 }
 
-void User::whoAmI() {
+void User::whoAmI() const {
 	cout << "My name is " << name << "! You can contact me at any time by phone at " << phone;
 	cout << " or you can send me a mail at " << mail << "!\n";
 }
 
-void User::buyMovie(Movie *movie) {
+void User::buyMovie(const Movie *movie) {
 	if (!name.empty()) {
 		if (balance < movie->getMoviePrice()) {
 			cout << "Not enough balance.\n";
@@ -46,7 +50,7 @@ void User::buyMovie(Movie *movie) {
 	} else cout << "Create an account first!\n";
 }
 
-void User::watchMovie(Movie *movie) {
+void User::watchMovie(Movie *movie) const {
 	if (name.empty()) {
 		cout << "Create an account first!\n";
 		return;
@@ -129,7 +133,7 @@ void User::buySubscription(Subscription &plan, string discount) {
 			cout << "You already have this subscription.\n";
 			return;
 		} else {
-			plan.applyDiscount(discount);
+			plan.applyDiscount(std::move(discount));
 			balance -= plan.getProductPrice();
 			plan.revertPriceAfterBuy();
 			delete userPlan;
@@ -138,7 +142,7 @@ void User::buySubscription(Subscription &plan, string discount) {
 	}
 }
 
-User::User(const User &cpy) {
+User::User(const User &cpy) : time_created(cpy.time_created) {
 	balance = cpy.balance;
 	boughtMoviesCounter = cpy.boughtMoviesCounter;
 	name = cpy.name;
@@ -174,14 +178,14 @@ std::ostream &operator<<(ostream &os, User &user) {
 }
 
 void User::setName(string name) {
-	User::name = name;
+	User::name = std::move(name);
 }
 
 void User::setMail(string mail) {
-	User::mail = mail;
+	User::mail = std::move(mail);
 }
 
-void User::setPhone(string phone) {
+void User::setPhone(const string &phone) {
 	try {
 		if (phone.size() > 10) {
 			throw invalid_argument("Argument \'phone\' too long");
@@ -222,7 +226,7 @@ void User::setBalance(double balance) {
 	User::balance = balance;
 }
 
-void User::setBoughtMoviesCounter(int boughtMoviesCounter) {
+void User::setBoughtMoviesCounter(const int boughtMoviesCounter) {
 	User::boughtMoviesCounter = boughtMoviesCounter;
 }
 
@@ -234,7 +238,7 @@ string User::getName() const {
 	return name;
 }
 
-void User::checkBoughtMovies() {
+void User::checkBoughtMovies() const {
 	for (const auto m: boughtMovies) {
 		cout << m.getTitle() << " ";
 	}

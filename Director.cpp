@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <utility>
 #include "Director.h"
 
 using namespace std;
@@ -11,8 +12,8 @@ int Director::movieCount = 0;
 
 Director::Director() : Person() {}
 
-Director::Director(string name, string mail, string phone, string university) : Person(name, mail, phone),
-																				university(university) {}
+Director::Director(string name, string mail, string phone, string university) : Person(std::move(name), std::move(mail), std::move(phone)),
+																				university(std::move(university)) {}
 
 
 Director::Director(const Director &cpy) : university(cpy.university) {
@@ -52,7 +53,7 @@ int Director::getMovieCount() {
 	return Director::movieCount;
 }
 
-void Director::whoAmI() {
+void Director::whoAmI() const {
 	cout << "I am a movie director. No I'm not Quentin Tarantino.";
 	cout << " My name is " << name << ". Call me if ready for business: " << phone << ".\n";
 }

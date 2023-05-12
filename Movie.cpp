@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <utility>
 #include "Movie.h"
 #include "Content.h"
 #include "InvalidAward.cpp"
@@ -13,10 +14,10 @@ using namespace std;
 
 Movie::Movie() : title(""), rating(0), viewCount(0), moviePrice(0.0) {}
 
-Movie::Movie(string title, double price) : title(title),
+Movie::Movie(string title, const double price) : title(std::move(title)),
 										   rating(0), viewCount(0), moviePrice(price) {}
 
-Movie::Movie(string title, double price, string award) : title(title), moviePrice(price), rating(0),
+Movie::Movie(string title, const double price, const string& award) : title(std::move(title)), moviePrice(price), rating(0),
 														 viewCount(0) {
 	movieAwards.push_back(award);
 }
@@ -85,15 +86,15 @@ double Movie::getMoviePrice() const {
 }
 
 void Movie::setTitle(string title) {
-	Movie::title = title;
+	Movie::title = std::move(title);
 }
 
 
-void Movie::setMoviePrice(double moviePrice) {
+void Movie::setMoviePrice(const double moviePrice) {
 	Movie::moviePrice = moviePrice;
 }
 
-void Movie::contentDescription() {
+void Movie::contentDescription() const {
 	cout << "Movie title: " << title << endl;
 	cout << "Number of awards: " << movieAwards.size() << endl;
 	cout << "Number of views: " << viewCount << endl;
