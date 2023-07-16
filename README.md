@@ -13,7 +13,6 @@ cel puțin un tip de date generic (cel puțin un typename), care să fie folosit
 - Definiți cel puțin o implementare specializată pentru clasa șablon sau
 funcția șablon (nu neapărat pentru ambele)
   - specializarea ClassHolder<Director>
-<<<<<<< etapa3
 #### Design patterns
 - Identificați minim 2 object-oriented design patterns diferite în clasele implemen-
 tate de voi.
@@ -54,8 +53,9 @@ dintre:
 Pentru a fi punctați, trebuie să instanțiați și să utilizați cel puțin câteva tipuri
 de date din biblioteca aleasă
   - Am afisat cand a fost apelat un constructor de tip User
-=======
+
+## [Link Etapa 1](https://github.com/flawreen/Netflip/tree/etapa1)
+
 ## [Link Etapa 2](https://github.com/flawreen/Netflip/tree/etapa2)
 
-## [Link Etapa 3](https://github.com/flawreen/Netflip/tree/etapa3)
->>>>>>> main
+
