@@ -8,29 +8,32 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <functional>
+#include "Content.h"
+
 using namespace std;
 
-class Movie {
-	string title, bestAward;
+
+class Movie : public Content {
+	string title;
+	vector<string> movieAwards;
 	int rating, viewCount;
 	double moviePrice;
 public:
 	Movie();  // Default constructor
 	Movie(string title, double price);
-	Movie(string title, double price, string award);
+	Movie(string title, double price, const string& award);
 	Movie(const Movie &cpy);
 	~Movie();
 	Movie& operator=(const Movie& cpy);
 
-	string getTitle() const;
-	void addAward(string award);
-	void increaseViewCount();
-	void calculateRating();
+	void addAward(string &award);
+	void contentDescription() const override;
+	void increaseViewCount() override ;
 	friend std::ostream& operator<<(std::ostream& os, Movie& mov);
+	string getTitle() const;
 	double getMoviePrice() const;
-	string getBestAward() const;
 	void setTitle(string title);
-	void setBestAward(string bestAward);
 	void setMoviePrice(double moviePrice);
 
 };

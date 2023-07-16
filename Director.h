@@ -6,43 +6,32 @@
 #define NETFLIP_DIRECTOR_H
 
 
+#include <string>
+using namespace std;
+#include <vector>
 #include "Movie.h"
+#include "Person.h"
 
-class Director {
-	//	Movie* filmography = new Movie[10];
-	Movie *bestMovie;
-	string name, lastAward, university;
-	int movieCount, movieViews;
-	double revenuePerMovie, earnings;
-	constexpr static double constant = 0.00133129;
+class Director : public virtual Person {
+protected:
+	vector<Movie> filmography;
+	static int movieCount;
+	string university;
 
 public:
 	Director();
-	Director(string name, string university);
-	Director(string ame, string university, string award);
-	Director(string name, string university, string movieName, double price);
-	Director(string name, string university, string movieName, double price, string award);
+	Director(string name, string mail, string phone, string university);
 	Director(const Director& cpy);
-	~Director();
-
+	virtual ~Director();
 	Director& operator=(const Director& cpy);
 
-	void setMovie(string movieName, double price);
-	void setMovie(string movieName, double price, string award);
-	void updateRevenue();
-	void calculateEarnings();
-	void showInfo() const;
+	void whoAmI() const override;
+	void addMovie(Movie &movie);
+	static void increaseMovieCount();
+	static int getMovieCount();
 
 	// setters and getters
-	int getMovieCount() const;
-	int getMovieViews() const;
-	double getEarnings() const;
 	string getName() const;
-
-	void setMovieCount(int movieCount);
-	void setMovieViews(int movieViews);
-	void setRevenuePerMovie(double revenuePerMovie);
-	void setEarnings(double earnings);
 };
 
 

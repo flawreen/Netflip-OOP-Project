@@ -10,36 +10,62 @@
 #include <vector>
 #include "Subscription.h"
 #include "Movie.h"
+#include <chrono>
 
-class User {
-	Movie* boughtMovie;
-	string name, mail, phone;
-	Subscription* userPlan;
+using namespace std;
+
+#include "Person.h"
+
+class User : public virtual Person {
+protected:
+	vector<Movie> boughtMovies;
+	Subscription *userPlan;
+	const time_t time_created;
+	string user_id;
 	double balance;
 	int boughtMoviesCounter;
 
 public:
 	User();
-	User(string name, string mail, string phone);
-	~User();
-	User(const User& cpy);
-	User& operator=(const User& cpy);
 
-	void buyMovie(Movie& movie);
-	void watchMovie();
+	User(const string& name, string mail, string phone);
+
+	virtual ~User();
+
+	User(const User &cpy);
+
+	User &operator=(const User &cpy);
+
+	void whoAmI() const override;
+
+	virtual void buyMovie(const Movie *movie);
+
+	virtual void watchMovie(Movie *movie) const;
+
+	virtual void checkBoughtMovies() const;
+
 	void addBalance(double money);
-	void buySubscription(Subscription& plan);
-	void buySubscription(Subscription& plan, string discount);
-	friend std::ostream& operator<<(std::ostream &os, User& user);
 
-	void setBoughtMovie(Movie *boughtMovie);
+	void buySubscription(Subscription &plan);
+
+	void buySubscription(Subscription &plan, string discount);
+
+	friend std::ostream &operator<<(std::ostream &os, User &user);
+
 	void setName(string name);
+
 	void setMail(string mail);
-	void setPhone(string phone);
+
+	void setPhone(const string& phone);
+
 	void setUserPlan(Subscription *userPlan);
+
 	void setBalance(double balance);
+
 	void setBoughtMoviesCounter(int boughtMoviesCounter);
+
 	double getBalance() const;
+
 	string getName() const;
 
 };
